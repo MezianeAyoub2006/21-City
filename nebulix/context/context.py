@@ -1,4 +1,4 @@
-import pygame
+import pygame, sys, os
 from typing import *
 
 class Context:
@@ -7,14 +7,17 @@ class Context:
         pygame.init()
         self.screen = pygame.display.set_mode(resolution, flags, vsync=vsync)
         self.clock = pygame.time.Clock()
-        self.running = True
+        icon_path = os.path.join(__file__[:-10], "logo.png")
+        
+        pygame.display.set_caption("Nebulix Project", icon_path)
+        pygame.display.set_icon(pygame.image.load(icon_path).convert_alpha())
 
     def run(self, game_loop):
-        while self.running:
+        while 1:
             game_loop()
             pygame.display.flip()
             self.clock.tick(10000)
 
     def quit(self):
         pygame.quit()
-        self.running = False
+        sys.exit()
