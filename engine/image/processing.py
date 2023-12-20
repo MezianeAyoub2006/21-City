@@ -1,7 +1,7 @@
 import os, pygame
 from typing import *
 from PIL import Image
-from nebulix.image.slicer import Slicer, convert_PIL_pygame
+from engine.image.slicer import Slicer, convert_PIL_pygame
 
 PATH = ''
 

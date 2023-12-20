@@ -4,7 +4,7 @@ class Context:
 
     def __init__(self, resolution:Tuple[int, int], flags:int=0, vsync:bool=False):
         """
-nebulix.context.Context
+engine.context.Context
 
 Handle game context object. It wraps all game functionalities. Essential to make every game components work together.
 
@@ -17,7 +17,7 @@ Args:
     
     def run(self, game_loop):
         """
-nebulix.context.Context.run
+engine.context.Context.run
 
 Initialize the game loop.
 
@@ -28,7 +28,7 @@ Args:
     
     def quit(self):
         """
-nebulix.context.Context.quit
+engine.context.Context.quit
 
 Quit and close the game.
         """
