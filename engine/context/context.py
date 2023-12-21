@@ -2,7 +2,7 @@ import pygame, sys, os
 from typing import *
 
 class Context:
-
+    
     def __init__(self, resolution:Tuple[int, int], flags:int=0, vsync:bool=False):
         pygame.init()
         self.screen = pygame.display.set_mode(resolution, flags, vsync=vsync)
