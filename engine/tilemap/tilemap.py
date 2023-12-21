@@ -9,6 +9,8 @@ class Tilemap(GameObject):
         GameObject.__init__(self, game, z_pos)
         self.colors = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (255, 255, 0), (255, 0, 255), (0, 255, 255), (255, 255, 255), (127, 127, 127), (255, 150, 150), (150, 255, 150), (150, 150, 255), (255, 255, 150), (255, 150, 255), (150, 255, 255)]
         self.tilemap = {}
+        self.neighboor_offsets = [(i, j) for i in range(-1, 2, 1) for j in range(-1, 2, 1)]
+        self.neighboor_offsets.remove((0, 0))
         self.tileset = []
         self.offset = offset
         self.content = []

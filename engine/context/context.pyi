@@ -1,6 +1,6 @@
 from typing import *
 
-class Context:
+class GameContext:
 
     def __init__(self, resolution:Tuple[int, int], flags:int=0, vsync:bool=False):
         """

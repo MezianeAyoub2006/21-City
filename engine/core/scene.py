@@ -6,8 +6,9 @@ class Scene:
         self.objects = []
 
     def update(self):
-        for object in filter(z_pos_func, self.objects):
-            try:
-                object.update(self)
-            except AttributeError:
-                pass
+        for object in sorted(self.objects, key=z_pos_func):
+            object.update(self)
+    
+    def link(self, *args):
+        for arg in args:
+            self.objects.append(arg)
