@@ -13,6 +13,7 @@ class GameContext:
         self.camera = [0, 0]
         self.dt = 1
         self.lt = time.perf_counter()
+        self.scroll_ = [0, 0]
 
     def run(self, game_loop):
         while 1:
@@ -29,6 +30,10 @@ class GameContext:
         self.dt = time.perf_counter() - self.lt
         self.dt *= 60
         self.lt = time.perf_counter()
+    
+    def draw_rect(self, rect, color, z_pos=None):
+        if z_pos == None:
+            pygame.draw.rect(self.screen, color, rect)
 
     def render_rect(self, rect, color, z_pos=None):
         if z_pos == None:
@@ -61,3 +66,10 @@ class GameContext:
 
     def toggle_fullscreen(self):
         pygame.display.toggle_fullscreen()
+
+    def scroll(self, position, scroll_speed):
+        self.scroll_[0] += ((position[0] - self.screen.get_width() / 2 - self.scroll_[0]) / scroll_speed) * self.get_dt()
+        self.camera = [int(self.scroll_[0]), self.camera[1]]
+        self.scroll_[1] += (position[1] - self.screen.get_height() / 2 - self.scroll_[1]) / scroll_speed * self.get_dt()
+        self.camera = [self.camera[0], int(self.scroll_[1])]
+    

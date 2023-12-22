@@ -33,9 +33,10 @@ class Player(Entity):
         super().update(scene)
         self.debug_rect()
 
+player = Player(ctx, [0, 0], [32, 32])
 
 scene = Scene()
-scene.link(background, collision, Player(ctx, [0, 0], [32, 32]))
+scene.link(background, collision, player)
 
 def game_loop():
     for event in pygame.event.get():
@@ -44,7 +45,9 @@ def game_loop():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_F11:
                 ctx.toggle_fullscreen()
+    ctx.draw_rect(pygame.Rect((0,0), ctx.get_display_size()), (0,0,0))
     scene.update()
     ctx.set_caption(str(round(ctx.get_fps())))
+    ctx.scroll(player.rect().center, 15)
 
 ctx.run(game_loop=game_loop)
