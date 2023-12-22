@@ -17,6 +17,8 @@ class Tilemap(GameObject):
         self.tags.append("@tile_map")
 
     def place_tile(self, id, location, rotation=0, flip_x=False, flip_y=False):
+        if id==None:
+            return
         try:
             self.tilemap[(location[0]+self.offset[0], location[1]+self.offset[1])] = {"pos" : [self.tile_size*location[0] + self.tile_size*self.offset[0], self.tile_size*location[1] + self.tile_size*self.offset[1]], "id":id, "rotation":rotation, "flip_x":flip_x, "flip_y":flip_y}
         except KeyError:
