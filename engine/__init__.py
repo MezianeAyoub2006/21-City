@@ -10,3 +10,4 @@ from .image.processing import *
 from .context.context import *
 from .tilemap.tilemap import *
 from .core.scene import *
+from .entities.entity import *

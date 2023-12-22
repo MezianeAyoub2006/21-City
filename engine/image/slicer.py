@@ -8,6 +8,7 @@ def convert_PIL_pygame(img:pygame.Surface):
     return pygame.image.fromstring(data, size, mode)
 
 class Slicer:
+    
     def __init__(self, img:str):
         self.img = Image.open(img)
 

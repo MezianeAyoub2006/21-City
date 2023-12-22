@@ -4,6 +4,7 @@ from engine.tilemap.tilemap_error import *
 import pygame
 
 class Tilemap(GameObject):
+    
     def __init__(self, game, tile_size, z_pos, offset=(0, 0)):
         self.tile_size = tile_size
         GameObject.__init__(self, game, z_pos)
@@ -14,6 +15,7 @@ class Tilemap(GameObject):
         self.tileset = []
         self.offset = offset
         self.content = []
+        self.animations = {}
         self.tags.append("@tile_map")
 
     def place_tile(self, id, location, rotation=0, flip_x=False, flip_y=False):
@@ -34,11 +36,19 @@ class Tilemap(GameObject):
                     raise
         
     def update(self, scene):
+        for tile in self.animations:
+            if self.animations[tile][2] < len(self.animations[tile][0]) - 1:
+                self.animations[tile][2] += self.animations[tile][1] * self.game.get_dt()
+            else:
+                self.animations[tile][2] = 0
         for loc in generate_screen_positions(self.tile_size, self.game.camera, self.game.get_display_size()):
             try:
                 tile = self.tilemap[loc]
                 if tile != None:
-                    surface = self.tileset[tile["id"]] 
+                    if tile["id"] in self.animations:
+                        surface = self.tileset[self.animations[tile["id"]][0][int(self.animations[tile["id"]][2])]]
+                    else:
+                        surface = self.tileset[tile["id"]] 
                     if tile["rotation"] != 0:
                         surface = pygame.transform.rotate(surface, tile["rotation"])
                     if tile["flip_x"] or tile["flip_y"]:
@@ -48,3 +58,6 @@ class Tilemap(GameObject):
                     del self.tilemap[loc]
             except KeyError:
                 pass
+
+    def set_animation_tile(self, id, speed, tiles):
+        self.animations[id] = [tiles, speed, 0]
