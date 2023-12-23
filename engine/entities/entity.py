@@ -11,6 +11,7 @@ class Entity(GameObject):
         self.tags.append("@entity")
         self.collide = False
         self.vel = [0, 0]
+        self.image = pygame.Surface((0, 0))
     
     def update(self, scene):
         solid_tilemaps = scene.get_objects_by_tag("#solid")
@@ -24,7 +25,7 @@ class Entity(GameObject):
                             rect.right = tile[0].left
                         if self.vel[0] < 0:
                             rect.left = tile[0].right
-                        self.pos[0] = rect.x
+                        self.pos[0] = rect.x - self.offset[0]
         self.pos[1] += self.vel[1] * self.game.get_dt()
         rect = self.rect()
         if self.collide:
@@ -35,11 +36,16 @@ class Entity(GameObject):
                             rect.bottom = tile[0].top
                         if self.vel[1] < 0:
                             rect.top = tile[0].bottom
-                        self.pos[1] = rect.y
+                        self.pos[1] = rect.y - self.offset[1]
 
     def rect(self):
-        return pygame.Rect(self.pos, self.size)
+        return pygame.Rect(self.pos[0] + self.offset[0], self.pos[1] + self.offset[1], self.size[0], self.size[1])
     
     def debug_rect(self, color=(255,0,0)):
-        self.game.render_rect(self.rect(), color)
+        image = pygame.Surface((self.size[0], self.size[1]))
+        image.fill(color)
+        self.game.render(image, [self.pos[0] + self.offset[0], self.pos[1] + self.offset[1]])
+
+    def render(self):
+        self.game.render(self.image, (self.pos[0] - self.offset[0], self.pos[1] - self.offset[1]))
 

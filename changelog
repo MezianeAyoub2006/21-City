@@ -1,0 +1,70 @@
+Historique des versions
+
+[légende]
++ = ajout
+> = texte
+* = modification
+
+<version 0.0> Setup update
+
+[0.0.1]
+
++ folder engine
++ context.py
++ context.py
++ slicer.py
++ processing.py
++ processing.pyi
++ main.py
++ scene.py
+
+> Initialisation et configuration du projet
+
+[0.0.2]
+
++ context.pyi
++ game_object.py
++ utils.py
++ tilemap.py
++ tilemap_error.py
+
+* game_object.py
+* context.py
+* main.py
+
+> Ajout de la gestion des tuiles et corrections de certains éléments
+
+[0.0.3]
+
+* tilemap.py
+* main.py
+
+> Ajout des tuiles animées
+
+[0.0.4]
+
++ entity.py
+
+* tilemap.py
+* main.py
+
+> Ajout des entités et gestion des collisions
+
+[0.0.5]
+
+* entity.py
+* tilemap.py
+* main.py
+
+> Corrections de certains bugs + ajout des boundings_rects pour affiner le système de collision
+
+[0.0.6]
+
++ folder scripts
++ player.py
+
+* main.py
+
+> Séparation du Jeu, du moteur et des scripts
+
+
