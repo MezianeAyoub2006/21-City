@@ -35,6 +35,15 @@ class Tilemap(GameObject):
                 except TilemapError:
                     raise
         
+    def get_surface_from_location(self, loc):
+        tile = self.tilemap[loc]
+        if tile != None:
+            if tile["id"] in self.animations:
+                surface = self.tileset[self.animations[tile["id"]][0][int(self.animations[tile["id"]][2])]]
+            else:
+                surface = self.tileset[tile["id"]] 
+        return surface
+        
     def update(self, scene):
         for tile in self.animations:
             if self.animations[tile][2] < len(self.animations[tile][0]) - 1:
@@ -58,6 +67,18 @@ class Tilemap(GameObject):
                     del self.tilemap[loc]
             except KeyError:
                 pass
+    
+    def get_tiles_around(self, pos):
+        check_pos = (int(pos[0]) // self.tile_size, int(pos[1]) // self.tile_size)
+        tiles = []
+        for offset in self.neighboor_offsets:
+            pos = (check_pos[0] + offset[0], check_pos[1]+offset[1])
+            if pos in self.tilemap:
+                srf = self.get_surface_from_location(pos)
+                bounding = srf.get_bounding_rect()
+                tiles.append((pygame.Rect(pos[0]*self.tile_size+bounding.x, pos[1]*self.tile_size+bounding.y, bounding.w, bounding.h),))
+        return tiles
+   
 
     def set_animation_tile(self, id, speed, tiles):
         self.animations[id] = [tiles, speed, 0]
