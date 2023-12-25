@@ -1,4 +1,4 @@
-#0.0.6
+#0.0.7
 
 from engine import *
 import pygame
@@ -11,7 +11,7 @@ ctx = GameContext((640, 360), pygame.SCALED | pygame.RESIZABLE, False)
 from scripts import *
 
 
-ctx.assets = TILESETS | SPRITES
+ctx.assets = TILESETS | SPRITES | OTHER
 GRASS_ID = 1
 
 wall = [
@@ -46,6 +46,7 @@ def game_loop():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_F11:
                 ctx.toggle_fullscreen()
+                
     ctx.draw_rect(pygame.Rect((0,0), ctx.get_display_size()), (0,0,0))
     scene.update()
     ctx.set_caption(str(round(ctx.get_fps())))

@@ -4,8 +4,13 @@ class Scene:
     
     def __init__(self):
         self.objects = []
+        self.iter = 0
 
     def update(self):
+        if self.iter == 0:
+            for object in sorted(self.objects, key=z_pos_func):
+                object.scene_init(self)
+            self.iter = 1
         for object in sorted(self.objects, key=z_pos_func):
             object.update(self)
     

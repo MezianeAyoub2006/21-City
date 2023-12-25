@@ -5,7 +5,7 @@ Historique des versions
 > = texte
 * = modification
 
-<version 0.0> Setup update
+<version 0.0 : SETUP UPDATE> 
 
 [0.0.1]
 
@@ -67,4 +67,26 @@ Historique des versions
 
 > Séparation du Jeu, du moteur et des scripts
 
+[0.0.7]
 
++ animated.py
++ assets.py
+
+* main.py
+* entity.py
+
+> Ajout des entitées animées
+
+[0.0.8]
+
++ shadow.py
+
+* player.py
+* scripts/__init__.py
+* engine/__init__.py
+* assets.py
+* main.py
+* game_object.py
+* scene.py
+
+> Ajout de l'ombre et du déclancheur de scène

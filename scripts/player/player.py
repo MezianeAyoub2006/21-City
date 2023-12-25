@@ -1,14 +1,19 @@
 from engine import *
+from scripts.player.shadow import *
 
 class Player(Entity, Animated):
+
     def __init__(self, game, pos):
         Entity.__init__(self, game, pos, [24, 16], [10, 24], 2)
         self.speed = 3
         Animated.__init__(self, game.assets["player_walk_cycle"])
         self.collide = True
         self.flip = False
+
+    def scene_init(self, scene):
+        scene.link(Shadow(self.game, self, 0.5, (-10, -2)))
+
     def update(self, scene):
-        self.debug_rect()
         keys = pygame.key.get_pressed()
         Entity.update(self, scene)
         self.stop = False

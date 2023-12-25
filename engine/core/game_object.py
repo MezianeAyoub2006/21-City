@@ -11,3 +11,6 @@ class GameObject:
 
     def update(self, scene):
         pass
+
+    def scene_init(self, scene):
+        pass
