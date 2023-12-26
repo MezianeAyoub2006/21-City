@@ -1,15 +1,13 @@
-#0.0.7
-
 from engine import *
 import pygame
 
 set_path("data/images/")
 
-ctx = GameContext((640, 360), pygame.SCALED | pygame.RESIZABLE, False)
-
+ctx = GameContext((640, 360), pygame.SCALED | pygame.RESIZABLE, True)
 
 from scripts import *
 
+pkm = OverworldPokemon(ctx, [10, 10], 2, 3, 2)
 
 ctx.assets = TILESETS | SPRITES | OTHER
 GRASS_ID = 1
@@ -36,8 +34,8 @@ collision.tags.append("#solid")
 
 player = Player(ctx, [0, 0])
 
-scene = Scene()
-scene.link(background, collision, player)
+ctx.scene = Scene()
+ctx.scene.link(background, collision, player, pkm)
 
 def game_loop():
     for event in pygame.event.get():
@@ -48,7 +46,7 @@ def game_loop():
                 ctx.toggle_fullscreen()
                 
     ctx.draw_rect(pygame.Rect((0,0), ctx.get_display_size()), (0,0,0))
-    scene.update()
+    ctx.scene.update()
     ctx.set_caption(str(round(ctx.get_fps())))
     ctx.scroll(player.rect().center, 15)
 

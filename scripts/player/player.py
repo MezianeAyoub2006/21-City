@@ -53,6 +53,7 @@ class Player(Entity, Animated):
         else:
             self.set_animation_cursor(2)
         self.render()
+        print(self.collisions)
     
     def render(self):
         self.flip_image(self.flip, False)

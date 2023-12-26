@@ -76,7 +76,7 @@ class Tilemap(GameObject):
             if pos in self.tilemap:
                 srf = self.get_surface_from_location(pos)
                 bounding = srf.get_bounding_rect()
-                tiles.append((pygame.Rect(pos[0]*self.tile_size+bounding.x, pos[1]*self.tile_size+bounding.y, bounding.w, bounding.h),))
+                tiles.append((pygame.Rect(pos[0]*self.tile_size+bounding.x, pos[1]*self.tile_size+bounding.y, bounding.w, bounding.h), self.tilemap[pos]["id"]))
         return tiles
    
 
