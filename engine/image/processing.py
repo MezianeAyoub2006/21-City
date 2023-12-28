@@ -49,3 +49,10 @@ def load_animation(path:str, slicing:Tuple[int, int], frames:int):
     sprite.slice_(slicing[0], slicing[1])
     sprite.organise(frames)
     return sprite.slices
+
+def organise_into_animation(sprite, slicing, frames):
+    slicer = Slicer()
+    slicer.img = sprite
+    slicer.slice_(slicing[0], slicing[1])
+    slicer.organise(frames)
+    return slicer.slices

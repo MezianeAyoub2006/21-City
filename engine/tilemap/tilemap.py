@@ -39,7 +39,11 @@ class Tilemap(GameObject):
         tile = self.tilemap[loc]
         if tile != None:
             if tile["id"] in self.animations:
-                surface = self.tileset[self.animations[tile["id"]][0][int(self.animations[tile["id"]][2])]]
+                try:
+
+                    surface = self.tileset[self.animations[tile["id"]][0][int(self.animations[tile["id"]][2])]]
+                except:
+                    surface = self.tileset[self.animations[tile["id"]][0][0]]
             else:
                 surface = self.tileset[tile["id"]] 
         return surface
@@ -55,7 +59,10 @@ class Tilemap(GameObject):
                 tile = self.tilemap[loc]
                 if tile != None:
                     if tile["id"] in self.animations:
-                        surface = self.tileset[self.animations[tile["id"]][0][int(self.animations[tile["id"]][2])]]
+                        try:
+                            surface = self.tileset[self.animations[tile["id"]][0][int(self.animations[tile["id"]][2])]]
+                        except:
+                            surface = surface = self.tileset[self.animations[tile["id"]][0][0]]
                     else:
                         surface = self.tileset[tile["id"]] 
                     if tile["rotation"] != 0:

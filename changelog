@@ -89,7 +89,7 @@ Historique des versions
 * game_object.py
 * scene.py
 
-> Ajout de l'ombre et du déclancheur de scène
+> Ajout de l ombre et du déclancheur de scène
 
 <version 0.1 OVERWORLD UPDATE> 25/12/2023
 
@@ -101,3 +101,24 @@ Historique des versions
 * main.py
 
 > Ajout des données relatives aux pokemons
+
+[0.1.2]
+
++ pokemon.py
++ folder fonts
++ main.ttf
++ tilemap.pyi
+
+* assets.py
+* main.py
+* utils.py
+* tilemap.py
+* utils.py
+* processing.py
+* processing.pyi
+* context.pyi
+* player.py
+* engine/__init__.py
+* scripts/__init__.py
+
+> Ajout des pokemons en tant qu entitées, de leur animations et de leur mouvements

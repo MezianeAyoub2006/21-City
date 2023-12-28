@@ -14,6 +14,7 @@ class Player(Entity, Animated):
         scene.link(Shadow(self.game, self, 0.5, (-10, -2)))
 
     def update(self, scene):
+        self.z_pos = (0.4/(self.game.size[1]*self.game.tile_size))*self.rect().bottom + 1.8
         keys = pygame.key.get_pressed()
         Entity.update(self, scene)
         self.stop = False
@@ -53,7 +54,6 @@ class Player(Entity, Animated):
         else:
             self.set_animation_cursor(2)
         self.render()
-        print(self.collisions)
     
     def render(self):
         self.flip_image(self.flip, False)

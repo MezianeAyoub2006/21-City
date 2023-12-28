@@ -54,3 +54,9 @@ class Entity(GameObject):
     def render(self):
         self.game.render(self.image, (self.pos[0] - self.offset[0], self.pos[1] - self.offset[1]))
 
+    def on_screen(self):
+        cam = self.game.camera
+        dsp = self.game.get_display_size()
+        posx = self.rect().centerx
+        posy = self.rect().centery
+        return posx + 32 > cam[0] and posx - 32 < cam[0] + dsp[0] and posy + 32 > cam[1] and posy - 32 < cam[1] + dsp[1]
