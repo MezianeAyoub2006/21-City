@@ -122,3 +122,19 @@ Historique des versions
 * scripts/__init__.py
 
 > Ajout des pokemons en tant qu entitées, de leur animations et de leur mouvements
+
+[0.1.3]
+
++ spawn.json
++ biomes.json
++ types.json
++ spawn.py
++ load_json.py
++ utils.py 
+
+* dex.json
+* player.py
+* pokemon.py
+* main.py
+
+> Ajout des familles de pokemon et des biomes en tant que données

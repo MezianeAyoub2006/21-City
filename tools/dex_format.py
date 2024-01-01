@@ -1,7 +1,7 @@
 """
 Outil chargé de re-formater le fichier dex.json en y 
-supprimant les caractères chinois et japonais puis en 
-actualisant les "id" de chaque table de donnée.
+modifiant les valeurs pour le rendre traitable par le
+jeu.
 """
 
 
@@ -14,6 +14,8 @@ with open(PATH, "r", encoding="utf-8") as file:
 
 for i in range(len(dex)):
     dex[i]["id"] = i + 1
+    for j in range(len(dex[i]["type"])):
+        dex[i]["type"][j] = dex[i]["type"][j].lower()
     try:
         del dex[i]["name"]["japanese"]
         del dex[i]["name"]["chinese"]

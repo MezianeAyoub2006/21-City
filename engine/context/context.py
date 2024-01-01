@@ -11,6 +11,7 @@ class GameContext:
         pygame.display.set_caption("Blank Project", icon_path)
         pygame.display.set_icon(pygame.image.load(icon_path).convert_alpha())
         self.camera = [0, 0]
+        self.fonts = {}
         self.dt = 1
         self.lt = time.perf_counter()
         self.scroll_ = [0, 0]
@@ -72,4 +73,23 @@ class GameContext:
         self.camera = [int(self.scroll_[0]), self.camera[1]]
         self.scroll_[1] += (position[1] - self.screen.get_height() / 2 - self.scroll_[1]) / scroll_speed * self.get_dt()
         self.camera = [self.camera[0], int(self.scroll_[1])]
+    
+    def load_font(self, file, name, size): 
+        txt = name
+        txt += str(size)
+        self.fonts[txt] = pygame.font.Font(file, size)
+
+    def load_sysfont(self, sysfont, size):
+        txt = sysfont
+        txt += str(size)
+        self.fonts[txt] = pygame.font.SysFont(sysfont, size)
+
+    def draw_text(self, text, font, position, color=(0,0,0), antialias=True, draw=True):
+        font = self.fonts[font]
+        if draw:
+            self.screen.blit(font.render(text, antialias, color), position)
+        return font.render(text, antialias, color)
+
+    def render_text(self, text, font, position, color=(0, 0, 0), antialias=True, draw=True):
+        return self.draw_text(text, font, self.relative(position), color, antialias, draw)
     

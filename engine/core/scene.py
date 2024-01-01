@@ -1,10 +1,13 @@
+from engine.tilemap.collection import *
+
 z_pos_func = lambda obj : obj.z_pos
 
 class Scene:
     
-    def __init__(self):
+    def __init__(self, game):
         self.objects = []
         self.iter = 0
+        self.game = game
 
     def update(self):
         if self.iter == 0:
@@ -13,6 +16,7 @@ class Scene:
             self.iter = 1
         for object in sorted(self.objects, key=z_pos_func):
             object.update(self)
+        self.objects = list(filter(lambda x : not x.erased, self.objects))
     
     def link(self, *args):
         for arg in args:

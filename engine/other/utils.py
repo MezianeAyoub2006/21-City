@@ -8,5 +8,10 @@ def generate_screen_positions(tile_size, camera, screen_size):
 def distance(first_position, second_position):
     return math.sqrt((first_position[0] - second_position[0])**2 + (first_position[1] - second_position[1])**2)
     
+def mean(*values):
+    mean = 0
+    for i in values:
+        mean+=i
+    return mean/len(values)
 
     

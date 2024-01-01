@@ -17,3 +17,5 @@ from .core.scene import *
 from .entities.entity import *
 from .entities.animated import *
 from .other.utils import *
+from .tilemap.collection import *
+from .tiled.map import *

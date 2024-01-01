@@ -6,8 +6,8 @@
             "french": "Bulbizarre"
         },
         "type": [
-            "Grass",
-            "Poison"
+            "grass",
+            "poison"
         ],
         "base": {
             "HP": 45,
@@ -59,8 +59,8 @@
             "french": "Herbizarre"
         },
         "type": [
-            "Grass",
-            "Poison"
+            "grass",
+            "poison"
         ],
         "base": {
             "HP": 60,
@@ -116,8 +116,8 @@
             "french": "Florizarre"
         },
         "type": [
-            "Grass",
-            "Poison"
+            "grass",
+            "poison"
         ],
         "base": {
             "HP": 80,
@@ -167,7 +167,7 @@
             "french": "Salam\u00c3\u00a8che"
         },
         "type": [
-            "Fire"
+            "fire"
         ],
         "base": {
             "HP": 39,
@@ -219,7 +219,7 @@
             "french": "Reptincel"
         },
         "type": [
-            "Fire"
+            "fire"
         ],
         "base": {
             "HP": 58,
@@ -275,8 +275,8 @@
             "french": "Dracaufeu"
         },
         "type": [
-            "Fire",
-            "Flying"
+            "fire",
+            "flying"
         ],
         "base": {
             "HP": 78,
@@ -326,7 +326,7 @@
             "french": "Carapuce"
         },
         "type": [
-            "Water"
+            "water"
         ],
         "base": {
             "HP": 44,
@@ -378,7 +378,7 @@
             "french": "Carabaffe"
         },
         "type": [
-            "Water"
+            "water"
         ],
         "base": {
             "HP": 59,
@@ -434,7 +434,7 @@
             "french": "Tortank"
         },
         "type": [
-            "Water"
+            "water"
         ],
         "base": {
             "HP": 79,
@@ -484,7 +484,7 @@
             "french": "Chenipan"
         },
         "type": [
-            "Bug"
+            "bug"
         ],
         "base": {
             "HP": 45,
@@ -535,7 +535,7 @@
             "french": "Chrysacier"
         },
         "type": [
-            "Bug"
+            "bug"
         ],
         "base": {
             "HP": 50,
@@ -586,8 +586,8 @@
             "french": "Papilusion"
         },
         "type": [
-            "Bug",
-            "Flying"
+            "bug",
+            "flying"
         ],
         "base": {
             "HP": 60,
@@ -636,8 +636,8 @@
             "french": "Roucool"
         },
         "type": [
-            "Normal",
-            "Flying"
+            "normal",
+            "flying"
         ],
         "base": {
             "HP": 40,
@@ -692,8 +692,8 @@
             "french": "Roucoups"
         },
         "type": [
-            "Normal",
-            "Flying"
+            "normal",
+            "flying"
         ],
         "base": {
             "HP": 63,
@@ -752,8 +752,8 @@
             "french": "Roucarnage"
         },
         "type": [
-            "Normal",
-            "Flying"
+            "normal",
+            "flying"
         ],
         "base": {
             "HP": 83,
@@ -806,7 +806,7 @@
             "french": "Rattata"
         },
         "type": [
-            "Normal"
+            "normal"
         ],
         "base": {
             "HP": 30,
@@ -861,7 +861,7 @@
             "french": "Rattatac"
         },
         "type": [
-            "Normal"
+            "normal"
         ],
         "base": {
             "HP": 55,
@@ -914,7 +914,7 @@
             "french": "Leveinard"
         },
         "type": [
-            "Normal"
+            "normal"
         ],
         "base": {
             "HP": 250,
@@ -973,7 +973,7 @@
             "french": "Goupix"
         },
         "type": [
-            "Fire"
+            "fire"
         ],
         "base": {
             "HP": 38,
@@ -1024,7 +1024,7 @@
             "french": "Feunard"
         },
         "type": [
-            "Fire"
+            "fire"
         ],
         "base": {
             "HP": 73,
@@ -1073,7 +1073,7 @@
             "french": "Magicarpe"
         },
         "type": [
-            "Water"
+            "water"
         ],
         "base": {
             "HP": 20,
@@ -1125,8 +1125,8 @@
             "french": "L\u00c3\u00a9viator"
         },
         "type": [
-            "Water",
-            "Flying"
+            "water",
+            "flying"
         ],
         "base": {
             "HP": 95,
@@ -1176,8 +1176,8 @@
             "french": "Nosferapti"
         },
         "type": [
-            "Poison",
-            "Flying"
+            "poison",
+            "flying"
         ],
         "base": {
             "HP": 40,
@@ -1228,8 +1228,8 @@
             "french": "Nosferalto"
         },
         "type": [
-            "Poison",
-            "Flying"
+            "poison",
+            "flying"
         ],
         "base": {
             "HP": 75,
@@ -1284,8 +1284,8 @@
             "french": "Mystherbe"
         },
         "type": [
-            "Grass",
-            "Poison"
+            "grass",
+            "poison"
         ],
         "base": {
             "HP": 45,
@@ -1336,8 +1336,8 @@
             "french": "Ortide"
         },
         "type": [
-            "Grass",
-            "Poison"
+            "grass",
+            "poison"
         ],
         "base": {
             "HP": 60,
@@ -1396,8 +1396,8 @@
             "french": "Rafflesia"
         },
         "type": [
-            "Grass",
-            "Poison"
+            "grass",
+            "poison"
         ],
         "base": {
             "HP": 75,
@@ -1446,8 +1446,8 @@
             "french": "Racaillou"
         },
         "type": [
-            "Rock",
-            "Ground"
+            "rock",
+            "ground"
         ],
         "base": {
             "HP": 40,
@@ -1502,8 +1502,8 @@
             "french": "Gravalanch"
         },
         "type": [
-            "Rock",
-            "Ground"
+            "rock",
+            "ground"
         ],
         "base": {
             "HP": 55,
@@ -1562,8 +1562,8 @@
             "french": "Grolem"
         },
         "type": [
-            "Rock",
-            "Ground"
+            "rock",
+            "ground"
         ],
         "base": {
             "HP": 80,
@@ -1616,8 +1616,8 @@
             "french": "Fantominus"
         },
         "type": [
-            "Ghost",
-            "Poison"
+            "ghost",
+            "poison"
         ],
         "base": {
             "HP": 30,
@@ -1664,8 +1664,8 @@
             "french": "Spectrum"
         },
         "type": [
-            "Ghost",
-            "Poison"
+            "ghost",
+            "poison"
         ],
         "base": {
             "HP": 45,
@@ -1716,8 +1716,8 @@
             "french": "Ectoplasma"
         },
         "type": [
-            "Ghost",
-            "Poison"
+            "ghost",
+            "poison"
         ],
         "base": {
             "HP": 60,
@@ -1762,7 +1762,7 @@
             "french": "Goinfrex"
         },
         "type": [
-            "Normal"
+            "normal"
         ],
         "base": {
             "HP": 135,
@@ -1812,7 +1812,7 @@
             "french": "Ronflex"
         },
         "type": [
-            "Normal"
+            "normal"
         ],
         "base": {
             "HP": 160,
@@ -1865,8 +1865,8 @@
             "french": "Ch\u00e9tiflor"
         },
         "type": [
-            "Grass",
-            "Poison"
+            "grass",
+            "poison"
         ],
         "base": {
             "HP": 50,
@@ -1917,8 +1917,8 @@
             "french": "Boustiflor"
         },
         "type": [
-            "Grass",
-            "Poison"
+            "grass",
+            "poison"
         ],
         "base": {
             "HP": 65,
@@ -1973,8 +1973,8 @@
             "french": "Empiflor"
         },
         "type": [
-            "Grass",
-            "Poison"
+            "grass",
+            "poison"
         ],
         "base": {
             "HP": 80,
@@ -2023,7 +2023,7 @@
             "french": "Riolu"
         },
         "type": [
-            "Fighting"
+            "fighting"
         ],
         "base": {
             "HP": 40,
@@ -2078,8 +2078,8 @@
             "french": "Lucario"
         },
         "type": [
-            "Fighting",
-            "Steel"
+            "fighting",
+            "steel"
         ],
         "base": {
             "HP": 70,
@@ -2133,8 +2133,8 @@
             "french": "Lokhlass"
         },
         "type": [
-            "Water",
-            "Ice"
+            "water",
+            "ice"
         ],
         "base": {
             "HP": 130,
@@ -2183,7 +2183,7 @@
             "french": "M\u00e9tamorph"
         },
         "type": [
-            "Normal"
+            "normal"
         ],
         "base": {
             "HP": 48,
@@ -2227,7 +2227,7 @@
             "french": "\u00c9voli"
         },
         "type": [
-            "Normal"
+            "normal"
         ],
         "base": {
             "HP": 55,
@@ -2310,7 +2310,7 @@
             "french": "Aquali"
         },
         "type": [
-            "Water"
+            "water"
         ],
         "base": {
             "HP": 130,
@@ -2359,7 +2359,7 @@
             "french": "Voltali"
         },
         "type": [
-            "Electric"
+            "electric"
         ],
         "base": {
             "HP": 65,
@@ -2408,7 +2408,7 @@
             "french": "Pyroli"
         },
         "type": [
-            "Fire"
+            "fire"
         ],
         "base": {
             "HP": 65,
@@ -2457,7 +2457,7 @@
             "french": "Pikachu"
         },
         "type": [
-            "Electric"
+            "electric"
         ],
         "base": {
             "HP": 35,
@@ -2513,7 +2513,7 @@
             "french": "Raichu"
         },
         "type": [
-            "Electric"
+            "electric"
         ],
         "base": {
             "HP": 60,
@@ -2563,8 +2563,8 @@
             "french": "Magn\u00e9ti"
         },
         "type": [
-            "Electric",
-            "Steel"
+            "electric",
+            "steel"
         ],
         "base": {
             "HP": 25,
@@ -2619,8 +2619,8 @@
             "french": "Magn\u00e9ton"
         },
         "type": [
-            "Electric",
-            "Steel"
+            "electric",
+            "steel"
         ],
         "base": {
             "HP": 50,
@@ -2679,8 +2679,8 @@
             "french": "Magn\u00e9zone"
         },
         "type": [
-            "Electric",
-            "Steel"
+            "electric",
+            "steel"
         ],
         "base": {
             "HP": 70,
@@ -2733,7 +2733,7 @@
             "french": "Minidraco"
         },
         "type": [
-            "Dragon"
+            "dragon"
         ],
         "base": {
             "HP": 41,
@@ -2785,7 +2785,7 @@
             "french": "Draco"
         },
         "type": [
-            "Dragon"
+            "dragon"
         ],
         "base": {
             "HP": 61,
@@ -2841,8 +2841,8 @@
             "french": "Dracolosse"
         },
         "type": [
-            "Dragon",
-            "Flying"
+            "dragon",
+            "flying"
         ],
         "base": {
             "HP": 91,
@@ -2892,8 +2892,8 @@
             "french": "Artikodin"
         },
         "type": [
-            "Ice",
-            "Flying"
+            "ice",
+            "flying"
         ],
         "base": {
             "HP": 90,
@@ -2937,8 +2937,8 @@
             "french": "\u00c9lecthor"
         },
         "type": [
-            "Electric",
-            "Flying"
+            "electric",
+            "flying"
         ],
         "base": {
             "HP": 90,
@@ -2982,8 +2982,8 @@
             "french": "Sulfura"
         },
         "type": [
-            "Fire",
-            "Flying"
+            "fire",
+            "flying"
         ],
         "base": {
             "HP": 90,
@@ -3027,7 +3027,7 @@
             "french": "Mewtwo"
         },
         "type": [
-            "Psychic"
+            "psychic"
         ],
         "base": {
             "HP": 106,
@@ -3071,7 +3071,7 @@
             "french": "Mew"
         },
         "type": [
-            "Psychic"
+            "psychic"
         ],
         "base": {
             "HP": 100,
@@ -3111,7 +3111,7 @@
             "french": "Darkrai"
         },
         "type": [
-            "Dark"
+            "dark"
         ],
         "base": {
             "HP": 70,

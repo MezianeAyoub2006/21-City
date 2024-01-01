@@ -1,0 +1,56 @@
+[
+    {
+        "id" : 0,
+        "name" : "plain"
+    },
+
+    {
+        "id" : 1,
+        "name" : "dense_plain"
+    },
+
+    {
+        "id" : 2,
+        "name" : "forest"
+    },
+
+    {
+        "id" : 3,
+        "name" : "beach"
+    },
+
+    {
+        "id" : 4,
+        "name" : "cave"
+    },
+
+    {
+        "id" : 5,
+        "name" : "mystic_cave"
+    },
+
+    {
+        "id" : 6,
+        "name" : "heat_cave"
+    },
+
+    {
+        "id" : 7,
+        "name" : "lava_cave"
+    },
+
+    {
+        "id" : 8,
+        "name" : "vulkan"
+    },
+
+    {
+        "id" : 9,
+        "name" : "water"
+    },
+
+    {
+        "id" : 10,
+        "name" : "sea_rocks"
+    }
+]

@@ -16,7 +16,7 @@ class Tilemap(GameObject):
         self.offset = offset
         self.content = []
         self.animations = {}
-        self.tags.append("@tile_map")
+        self.tags.append("@tilemap")
 
     def place_tile(self, id, location, rotation=0, flip_x=False, flip_y=False):
         if id==None:
@@ -85,7 +85,6 @@ class Tilemap(GameObject):
                 bounding = srf.get_bounding_rect()
                 tiles.append((pygame.Rect(pos[0]*self.tile_size+bounding.x, pos[1]*self.tile_size+bounding.y, bounding.w, bounding.h), self.tilemap[pos]["id"]))
         return tiles
-   
 
     def set_animation_tile(self, id, speed, tiles):
         self.animations[id] = [tiles, speed, 0]
