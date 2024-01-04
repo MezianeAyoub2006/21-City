@@ -14,5 +14,5 @@ def spawn_group(scene, id, center, z_pos):
         values.append(i)
     for i in range(random.choice(range_list(group["number"]))):
         pokemon_id = get_prob_value(values, parts)
-        spawn_pokemon(scene, pokemon_id, random_position_inside_circle(group["disparity"]*32, center), random.choice(range_list(scene.game.spawn_data["solo"][pokemon_id-1]["level"])), z_pos)
+        spawn_pokemon(scene, pokemon_id, random_position_inside_circle(10*32, center), random.choice(range_list(scene.game.spawn_data["solo"][pokemon_id-1]["level"])), z_pos)
 

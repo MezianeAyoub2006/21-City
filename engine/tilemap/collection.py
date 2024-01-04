@@ -27,11 +27,15 @@ class TilemapCollection:
     def place_pattern(self, pattern, location, z_pos, rotation=0, flip_x=False, flip_y=False):
         self.tilemaps[z_pos].place_pattern(pattern, location, rotation, flip_x, flip_y)
     
-    def place_multidim_pattern(self, pattern, location, z_pos, step=1, rotation=0, flip_x=False, flip_y=False):
+    def place_multidim_pattern(self, pattern, location, z_pos, step=1, rotation=0, flip_x=False, flip_y=False, tags={}):
         for i in range(z_pos, len(pattern)+z_pos, step):
             if not i in self.tilemaps.keys():
                 self.tilemaps[i] = Tilemap(self.game, self.tile_size, i)
-            self.tilemaps[i].place_pattern(pattern[i], location, rotation, flip_x, flip_y)
+                self.tilemaps[i].tileset = self.tilemaps[0].tileset
+                if i in tags:
+                    for tag in tags[i]:
+                        self.tilemaps[i].tags.append(tag)
+            self.tilemaps[i].place_pattern(pattern[i-z_pos], location, rotation, flip_x, flip_y)
     
     def get_tiles(self, location):
         tiles = []

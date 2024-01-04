@@ -11,10 +11,10 @@ class Player(Entity, Animated):
         self.flip = False
 
     def scene_init(self, scene):
-        scene.link(Shadow(self.game, self, 0.5, (-10, -2)))
+        scene.link(Shadow(self.game, self, 1.1, (-10, -2)))
 
     def update(self, scene):
-        self.z_pos = (0.4/(self.game.size[1]*self.game.tile_size))*self.rect().bottom + 1.8
+        self.z_pos = ((1/(self.game.size[1]*self.game.tile_size))*self.rect().bottom + 2)
         keys = pygame.key.get_pressed()
         Entity.update(self, scene)
         self.stop = False

@@ -1,5 +1,6 @@
 from engine import *
 from scripts.utils import *
+from scripts.player.shadow import *
 import random, pygame
 
 def generate_labels(game):
@@ -14,30 +15,19 @@ class Pokemon(Entity):
         self.moving = False
         self.move_by_itself = True
         self.seen = False
-
-        if game.labels == {}:
-            generate_labels(game)
-
-        self.aggressive = True
+        if game.labels == {}: generate_labels(game)
+        self.aggressive = aggressive
         self.fairy = fairy
-
         self.shiny = True if random.randint(1, self.game.shiney_chance) == 1 else False
-
         self.tags.append("@pokemon")
-        if self.shiny:
-            self.tags.append("#shiny")
-
+        if self.shiny: self.tags.append("#shiny")
         self.dir = ['right', "up", "left", "down", "up-left", "up-right", "down-right", "up-left", "down-left"][random.randint(0, 7)]
         self.state = 1
         self.timer = 0
-
         self.spawn_pos = self.pos.copy()
-
         self.asset = self.game.assets['pokemons'][id-1].copy()
-
         self.speed = max(0.4, self.get_stat("Speed")/50)
         self.level = level
-
         self.randomness = (
             (1/self.get_stat("Attack"))*5000, 
             (1/self.get_stat("Sp. Attack"))*8000, 
@@ -47,18 +37,15 @@ class Pokemon(Entity):
                 self.get_stat("Sp. Defense")
                 )
         )
-
-        if self.shiny:
-            self.set_asset_to_be_shiny()
-        
+        if self.shiny: self.set_asset_to_be_shiny()
     
-    def set_asset_to_be_shiny(self):
+    def set_asset_to_be_shiny(self): 
         for x in range(128):
             for y in range(256):
                 pxl = self.asset.get_at((x, y))
                 self.asset.set_at((x, y), (pxl[1], pxl[2], pxl[0], pxl[3]))
     
-    def goto(self, pos, escape=False):
+    def goto(self, pos, escape=False): 
         if distance(pos, self.pos) <= 32:
             return
         target_vector = pygame.math.Vector2(pos[0] - self.pos[0], pos[1] - self.pos[1])
@@ -77,41 +64,32 @@ class Pokemon(Entity):
         return self.game.dex_data[self.id-1]
 
     def update(self, scene):
-        self.z_pos = (0.4/(self.game.size[1]*self.game.tile_size))*self.rect().bottom + 1.8
-
+        self.z_pos = ((1/(self.game.size[1]*self.game.tile_size))*self.rect().bottom + 2)
         if self.moving or self.aggressive or self.fairy:
             self.timer += (self.speed/10)*self.game.get_dt()
         if self.timer >= 1:
             self.timer = 0
             self.state = not self.state
-
         if distance(self.pos, self.game.player.rect().center) <= 32*6:
             self.seen = True
-
         Entity.update(self, scene)
-
         if not (self.fairy and self.seen) and not (self.aggressive and self.seen) and self.move_by_itself:
             self.basic_ai(self.speed, *self.randomness)
-
         self.get_image_from_dir()
-
         if self.on_screen():
             self.render()
         elif self.fairy and self.seen:
             self.kill()
         if self.fairy and self.seen and (self.rect().centerx <= 10 or self.rect().centery <= 10):
             self.kill()
- 
         if self.seen:
             if self.fairy:
                 self.goto(self.game.player.rect().center, True)
             if self.aggressive:
                 self.goto([self.game.player.rect().centerx-20, self.game.player.rect().centery-20])
         
-
     def render_label(self):
         self.game.render(self.game.labels[self.level], [self.pos[0]+5, self.pos[1] - min(float(self.get_data()["profile"]["height"].split(" ")[0])*15 + 5, 20)])
-
 
     def get_image_from_dir(self):
         if self.state == 0:
@@ -133,8 +111,7 @@ class Pokemon(Entity):
             if self.dir == "down":
                 self.image = self.asset.subsurface(0, 128+64, 64, 64)
 
-
-    def basic_ai(self, speed, moving_prb, turning_prb, stopping_prb):
+    def basic_ai(self, speed, moving_prb, turning_prb, stopping_prb): 
         if random.randint(0, int(moving_prb/self.game.get_dt())) == 1:
             self.moving = not self.moving
         if random.randint(0, int(turning_prb/self.game.get_dt())) == 1:

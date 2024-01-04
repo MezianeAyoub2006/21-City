@@ -19,3 +19,4 @@ from .entities.animated import *
 from .other.utils import *
 from .tilemap.collection import *
 from .tiled.map import *
+from .tilemap.pattern import *
