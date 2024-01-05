@@ -23,7 +23,7 @@ ctx.labels = {}
 ctx.player = Player(ctx, [30, 30])
 ctx.scene = Scene(ctx)
 
-collection = generate_biome_collection(ctx, ctx.size, 32, 0, 2)
+collection = generate_biome_collection(ctx, ctx.size, 32, 0, 5)
 collection.link(ctx.scene)
 
 ctx.scene.link(ctx.player)
