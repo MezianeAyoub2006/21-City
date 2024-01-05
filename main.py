@@ -28,7 +28,8 @@ collection.link(ctx.scene)
 
 ctx.scene.link(ctx.player)
 
-spawn_group(ctx.scene, 0, [400, 400], 2)
+for i in range(1, 61):
+    spawn_pokemon(ctx.scene, i, [200, 200], 50, 2)
 
 def game_loop():
     # evénements 
@@ -53,4 +54,3 @@ def game_loop():
 
 ctx.run(game_loop=game_loop)
 
-#Stelios

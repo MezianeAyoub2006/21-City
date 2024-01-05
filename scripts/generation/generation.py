@@ -44,6 +44,18 @@ def generate_biome_collection(game, size, tile_size, id, config):
             # placement des fleurs
             for i in range(random.randint(10, 30)):
                 collection[1.01].place_tile(random.choice(ANIM_FLOWERS), (random.randint(0, size[0]), random.randint(0, size[1])))
+            
+            if config in [2, 3, 4, 5, 6]:
+                # Génération d'un cercle d'hautes herbes
+                center_x, center_y = size[0] // 2, size[1] // 2  # Centre de la salle
+                max_radius = min(size[0] // 2, size[1] // 2)  # Rayon du cercle d'hautes herbes
+                for i in range(5, size[0]-5):
+                    for j in range(5, size[1]-5):
+                        distance_to_center = ((i - center_x) ** 2 + (j - center_y) ** 2) ** 0.5
+                        probability = 1.0 - min(1.0, distance_to_center / max_radius)  
+                        if random.random() < probability:
+                            collection[1.01].place_tile(GRASS_ID, (i, j))
+                forbiden_positions += [(x, y) for x in range(6, size[0]-6) for y in range(6, size[1]-6)] # Empécher les arbres d'aparaitre dans le cercle
 
             if config == 0: # Variante horizontale 
                 collection.place_multidim_pattern(tiled_to_pattern(f"data/maps/structures/plain/horizontal/{path_way}.json"), (0, 0), 1) # chargement du modèle de chemin
@@ -73,52 +85,20 @@ def generate_biome_collection(game, size, tile_size, id, config):
                 collection.place_multidim_pattern(tiled_to_pattern("data/maps/structures/plain/grass/down.json"), (0, 0), 1)
                 collection.place_multidim_pattern(tiled_to_pattern("data/maps/structures/plain/grass/left.json"), (0, 0), 1)
                 collection.place_multidim_pattern(tiled_to_pattern("data/maps/structures/plain/grass/right.json"), (0, 0), 1)
-
-                # Génération d'un cercle d'hautes herbes
-                center_x, center_y = size[0] // 2, size[1] // 2  # Centre de la salle
-                max_radius = min(size[0] // 2, size[1] // 2)  # Rayon du cercle d'hautes herbes
-                for i in range(5, size[0]-5):
-                    for j in range(5, size[1]-5):
-                        distance_to_center = ((i - center_x) ** 2 + (j - center_y) ** 2) ** 0.5
-                        probability = 1.0 - min(1.0, distance_to_center / max_radius)  
-                        if random.random() < probability:
-                            collection[1.01].place_tile(GRASS_ID, (i, j))
-
-                forbiden_positions += [(x, y) for x in range(6, size[0]-6) for y in range(6, size[1]-6)] # Empécher les arbres d'aparaitre dans le cercle
-            
+           
             if config == 3: # variante entrée à gauche sans sortie
                 collection.place_multidim_pattern(tiled_to_pattern("data/maps/structures/plain/borders/border.json"), (0, 0), 2)
                 collection.place_multidim_pattern(tiled_to_pattern("data/maps/structures/plain/borders/up.json"), (0, 0), 2)
                 collection.place_multidim_pattern(tiled_to_pattern("data/maps/structures/plain/borders/down.json"), (0, 0), 2)
                 collection.place_multidim_pattern(tiled_to_pattern("data/maps/structures/plain/borders/right.json"), (0, 0), 2)
                 collection.place_multidim_pattern(tiled_to_pattern("data/maps/structures/plain/grass/left.json"), (0, 0), 1)
-                center_x, center_y = size[0] // 2, size[1] // 2  
-                max_radius = min(size[0] // 2, size[1] // 2)  
-                for i in range(5, size[0]-5):
-                    for j in range(5, size[1]-5):
-                        distance_to_center = ((i - center_x) ** 2 + (j - center_y) ** 2) ** 0.5
-                        probability = 1.0 - min(1.0, distance_to_center / max_radius)  
-                        if random.random() < probability:
-                            collection[1.01].place_tile(GRASS_ID, (i, j))
-
-                forbiden_positions += [(x, y) for x in range(6, size[0]-6) for y in range(6, size[1]-6)] 
             
             if config == 4:
                 collection.place_multidim_pattern(tiled_to_pattern("data/maps/structures/plain/borders/border.json"), (0, 0), 2)
                 collection.place_multidim_pattern(tiled_to_pattern("data/maps/structures/plain/borders/up.json"), (0, 0), 2)
                 collection.place_multidim_pattern(tiled_to_pattern("data/maps/structures/plain/borders/down.json"), (0, 0), 2)
                 collection.place_multidim_pattern(tiled_to_pattern("data/maps/structures/plain/borders/left.json"), (0, 0), 2)
-                collection.place_multidim_pattern(tiled_to_pattern("data/maps/structures/plain/grass/right.json"), (0, 0), 1)
-                center_x, center_y = size[0] // 2, size[1] // 2  
-                max_radius = min(size[0] // 2, size[1] // 2)  
-                for i in range(5, size[0]-5):
-                    for j in range(5, size[1]-5):
-                        distance_to_center = ((i - center_x) ** 2 + (j - center_y) ** 2) ** 0.5
-                        probability = 1.0 - min(1.0, distance_to_center / max_radius)  
-                        if random.random() < probability:
-                            collection[1.01].place_tile(GRASS_ID, (i, j))
-
-                forbiden_positions += [(x, y) for x in range(6, size[0]-6) for y in range(6, size[1]-6)]
+                collection.place_multidim_pattern(tiled_to_pattern("data/maps/structures/plain/grass/right.json"), (0, 0), 1)       
 
             if config == 5:
                 collection.place_multidim_pattern(tiled_to_pattern("data/maps/structures/plain/borders/border.json"), (0, 0), 2)
@@ -126,34 +106,13 @@ def generate_biome_collection(game, size, tile_size, id, config):
                 collection.place_multidim_pattern(tiled_to_pattern("data/maps/structures/plain/borders/down.json"), (0, 0), 2)
                 collection.place_multidim_pattern(tiled_to_pattern("data/maps/structures/plain/borders/left.json"), (0, 0), 2)
                 collection.place_multidim_pattern(tiled_to_pattern("data/maps/structures/plain/grass/up.json"), (0, 0), 1)
-                # Génération d'un cercle d'hautes herbes
-                center_x, center_y = size[0] // 2, size[1] // 2  # Centre de la salle
-                max_radius = min(size[0] // 2, size[1] // 2)  # Rayon du cercle d'hautes herbes
-                for i in range(5, size[0]-5):
-                    for j in range(5, size[1]-5):
-                        distance_to_center = ((i - center_x) ** 2 + (j - center_y) ** 2) ** 0.5
-                        probability = 1.0 - min(1.0, distance_to_center / max_radius)  
-                        if random.random() < probability:
-                            collection[1.01].place_tile(GRASS_ID, (i, j))
-
-                forbiden_positions += [(x, y) for x in range(6, size[0]-6) for y in range(6, size[1]-6)] 
-            
+                 
             if config == 6:
                 collection.place_multidim_pattern(tiled_to_pattern("data/maps/structures/plain/borders/border.json"), (0, 0), 2)
                 collection.place_multidim_pattern(tiled_to_pattern("data/maps/structures/plain/borders/up.json"), (0, 0), 2)
                 collection.place_multidim_pattern(tiled_to_pattern("data/maps/structures/plain/borders/right.json"), (0, 0), 2)
                 collection.place_multidim_pattern(tiled_to_pattern("data/maps/structures/plain/borders/left.json"), (0, 0), 2)
                 collection.place_multidim_pattern(tiled_to_pattern("data/maps/structures/plain/grass/down.json"), (0, 0), 1)
-                center_x, center_y = size[0] // 2, size[1] // 2 
-                max_radius = min(size[0] // 2, size[1] // 2)  
-                for i in range(5, size[0]-5):
-                    for j in range(5, size[1]-5):
-                        distance_to_center = ((i - center_x) ** 2 + (j - center_y) ** 2) ** 0.5
-                        probability = 1.0 - min(1.0, distance_to_center / max_radius)  
-                        if random.random() < probability:
-                            collection[1.01].place_tile(GRASS_ID, (i, j))
-                forbiden_positions += [(x, y) for x in range(6, size[0]-6) for y in range(6, size[1]-6)] 
-
 
             # Génération des arbres
             forbiden = get_pattern_overlap_offsets(tree_pattern[0]) # liste des positions autours de l'arbre dans lesquelles on ne peut pas placer d'arbre

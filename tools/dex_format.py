@@ -7,7 +7,7 @@ jeu.
 
 import json
 
-PATH = "C:/Users/Karima Meziane/Desktop/Black Jack/pokemon_data/dex.json"
+PATH = "pokemon_data/dex.json"
 
 with open(PATH, "r", encoding="utf-8") as file:
     dex = json.load(file)
