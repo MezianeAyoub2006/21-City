@@ -52,7 +52,136 @@
             "id" : 9,
             "part" : 0.1,
             "level" : [[36,100]]
+        },
+
+        {
+            "id" : 10,
+            "part" : 0.5,
+            "level" : [[1,10]]
+        },
+
+        {
+            "id" : 11,
+            "part" : 0.3,
+            "level" : [[10,11]]
+        },
+
+        {
+            "id" : 12,
+            "part" : 0.2,
+            "level" : [[12,100]]
+        },
+
+        {
+            "id" : 13,
+            "part" : 0.6,
+            "level" : [[1,16]]
+        },
+
+        {
+            "id" : 14,
+            "part" : 0.3,
+            "level" : [[10,16]]
+        },
+
+        {
+            "id" : 15,
+            "part" : 0.1,
+            "level" : [[38,100]]
+        },
+
+        {
+            "id" : 16,
+            "part" : 0.6,
+            "level" : [[1,20]]
+        },
+
+        {
+            "id" : 17,
+            "part" : 0.4,
+            "level" : [[20,100]]
+        },
+
+        {
+            "id" : 18,
+            "part" : 0.4,
+            "level" : [[12,100]]
+        },
+
+        {
+            "id" : 19,
+            "part" : 0.9,
+            "level" : [[1,25]]
+        },
+
+        {
+            "id" : 20,
+            "part" : 0.8,
+            "level" : [[25,100]]
+        },
+
+        {
+            "id" : 21,
+            "part" : 0.8,
+            "level" : [[1,20]]
+        },
+
+        {
+            "id" : 22,
+            "part" : 0.2,
+            "level" : [[20,100]]
+        },
+
+        {
+            "id" : 23,
+            "part" : 0.8,
+            "level" : [[1,22]]
+        },
+
+        {
+            "id" : 24,
+            "part" : 0.2,
+            "level" : [[22,100]]
+        },
+
+        {
+            "id" : 25,
+            "part" : 0.5,
+            "level" : [[1,21]]
+        },
+
+        {
+            "id" : 26,
+            "part" : 0.4,
+            "level" : [[21,100]]
+        },
+
+        {
+            "id" : 27,
+            "part" : 0.1,
+            "level" : [[22,100]]
+        },
+
+        {
+            "id" : 28,
+            "part" : 0.2,
+            "level" : [[1,25]]
+        },
+
+        {
+            "id" : 29,
+            "part" : 0.2,
+            "level" : [[25,45]]
+        },
+
+        {
+            "id" : 30,
+            "part" : 0.2,
+            "level" : [[25,45]]
         }
+
+        
+
     ],
 
     "group": [
@@ -84,6 +213,79 @@
             "biome" : {
                 "beach" : 0.05,
                 "water" : 0.05
+            }
+        },
+
+        {
+            "id" : 4, 
+            "composition" : [10, 11, 12],
+            "number" : [[3, 6]],
+            "biome" : {
+                "plain" : 0.05,
+                "dense_plain" : 0.05,
+                "forest" : 0.1
+            }
+        },
+
+        {
+            "id" : 5, 
+            "composition" : [13, 14, 15],
+            "number" : [[3, 6]],
+            "biome" : {
+                "plain" : 0.05,
+                "dense_plain" : 0.05,
+                "forest" : 0.1
+            }
+        },
+
+        {
+            "id" : 6, 
+            "composition" : [16, 17],
+            "number" : [[3, 6]],
+            "biome" : {
+                "plain" : 0.05,
+                "dense_plain" : 0.05,
+                "forest" : 0.1
+            }
+        },
+
+        {
+            "id" : 7, 
+            "composition" : [18],
+            "number" : [[3, 6]],
+            "biome" : {
+                "plain" : 0.05,
+                "dense_plain" : 0.05,
+                "forest" : 0.1
+            }
+        },
+
+        {
+            "id" : 8, 
+            "composition" : [19, 20],
+            "number" : [[3, 6]],
+            "biome" : {
+                "plain" : 0.05,
+                "dense_plain" : 0.05,
+                "forest" : 0.1
+            }
+        },
+
+        {
+            "id" : 9, 
+            "composition" : [21, 22],
+            "number" : [[3, 6]],
+            "biome" : {
+                "water" : 0.05
+            }
+        },
+
+        {
+            "id" : 10, 
+            "composition" : [23, 24],
+            "number" : [[3, 6]],
+            "biome" : {
+                "cave" : 0.05
             }
         }
     ]
