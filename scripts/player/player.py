@@ -1,18 +1,26 @@
 from engine import *
+from scripts.generation.generation import *
 from scripts.player.shadow import *
 
 class Player(Entity, Animated):
-
-    def __init__(self, game, pos):
+    def __init__(self, game, pos, dir):
         Entity.__init__(self, game, pos, [24, 16], [10, 24], 2)
-        self.speed = 3
         Animated.__init__(self, game.assets["player_walk_cycle"])
         self.collide = True
         self.flip = False
-
-    def scene_init(self, scene):
-        scene.link(Shadow(self.game, self, 1.1, (-10, -2)))
-
+        self.dir = dir
+        self.types = []
+        self.speed = 3
+        self.tags.append("@player")
+        self.transition_data = None
+        self.inventory = [(i, 12) for i in range(0, 5)]
+        self.couldown = [0, 0, 0, 0, 0]
+        self.item_chosen = 0
+        self.attack= False
+        self.item_anim_cycle = 0
+        self.switch = True
+        self.attack_rect = pygame.Rect(0, 0, 0, 0)
+    
     def update(self, scene):
         self.z_pos = ((1/(self.game.size[1]*self.game.tile_size))*self.rect().bottom + 2)
         keys = pygame.key.get_pressed()
@@ -43,7 +51,6 @@ class Player(Entity, Animated):
             self.dir = "right"
             self.set_animation(1)
             self.flip = True
-       
         self.vel = [(int(keys[pygame.K_RIGHT]) - int(keys[pygame.K_LEFT]))*self.speed,(int(keys[pygame.K_DOWN]) - int(keys[pygame.K_UP]))*self.speed]
         if self.stop : self.vel = [0, 0]
         if abs(self.vel[0]) == abs(self.vel[1]) != 0:
@@ -54,6 +61,138 @@ class Player(Entity, Animated):
         else:
             self.set_animation_cursor(2)
         self.render()
+        self.check_transitions()
+        self.check_items()
+    
+    def inventory_(self):
+        for idx, slot in enumerate(self.inventory):
+            self.game.draw(self.game.assets["slot"][int(idx == self.item_chosen)], (50*idx + 200, 360-44-5))
+            if slot != None:
+                self.game.draw(self.game.assets["items"][slot[0]], (50*idx + 200 + 3, 360-44-5 + 3))
+                self.game.draw_text(str(slot[1]), "main15", (50*idx + 200 + 25, 360-44-5 + 25))
+    
+    def check_items(self):
+        self.switch = True
+        self.attack = False
+        self.attack_rect = pygame.Rect(0, 0, 0, 0)
+        if self.game.space and self.couldown[self.item_chosen] == 0:
+            if self.game.items[self.inventory[self.item_chosen][0]]["type"] == "melee":
+                self.item_anim_cycle = 0.01
+                self.couldown[self.item_chosen] = self.game.items[self.inventory[self.item_chosen][0]]["couldown"]
+        if self.item_anim_cycle != 0:
+            self.switch = False
+            self.attack = self.inventory[self.item_chosen][0]
+            try:
+                if self.dir in ['left', "down-left", "up-left"]:
+                    image = pygame.transform.flip(self.game.assets[self.game.items[self.inventory[self.item_chosen][0]]["animation"]][int(self.item_anim_cycle)], True, False)
+                    self.game.render(image, [self.pos[0]+self.game.items[self.inventory[self.item_chosen][0]]["loffset"][0], self.pos[1]+self.game.items[self.inventory[self.item_chosen][0]]["loffset"][1]])
+                if self.dir in ['right', "down-right", "up-right"]:
+                    image = pygame.transform.flip(self.game.assets[self.game.items[self.inventory[self.item_chosen][0]]["animation"]][int(self.item_anim_cycle)], False, False)
+                    self.game.render(image, [self.pos[0]+self.game.items[self.inventory[self.item_chosen][0]]["roffset"][0], self.pos[1]+self.game.items[self.inventory[self.item_chosen][0]]["roffset"][1]])
+                if self.dir == "down":
+                    image = pygame.transform.rotate(pygame.transform.flip(self.game.assets[self.game.items[self.inventory[self.item_chosen][0]]["animation"]][int(self.item_anim_cycle)], True, False), 90)
+                    self.game.render(image, [self.pos[0]+self.game.items[self.inventory[self.item_chosen][0]]["loffset"][0], self.pos[1]+self.game.items[self.inventory[self.item_chosen][0]]["loffset"][1]+65])
+                if self.dir == "up":
+                    image = pygame.transform.rotate(pygame.transform.flip(self.game.assets[self.game.items[self.inventory[self.item_chosen][0]]["animation"]][int(self.item_anim_cycle)], False, False), 90)
+                    self.game.render(image, [self.pos[0]+self.game.items[self.inventory[self.item_chosen][0]]["roffset"][0] - 65, self.pos[1]+self.game.items[self.inventory[self.item_chosen][0]]["roffset"][1]])
+                self.item_anim_cycle += self.game.items[self.inventory[self.item_chosen][0]]["speed"] * self.game.get_dt()        
+            except Exception as e:
+                print(e)
+                self.item_anim_cycle = 0
+        for idx in range(len(self.couldown)):
+            if self.couldown[idx] > 0:
+                self.couldown[idx] -= self.game.get_dt() * (1/60)
+            else:
+                self.couldown[idx] = 0
+        if self.attack:
+            if self.dir in ["left", "up-left", "down-left"]:
+                self.attack_rect = self.rect()
+                range_ = self.game.items[self.inventory[self.item_chosen][0]]["range"]
+                self.attack_rect.w = range_ // 2
+                self.attack_rect.h = 60
+                self.attack_rect.y -= 20
+                self.attack_rect.x -= self.attack_rect.w
+                #self.game.render_rect(self.attack_rect, (255, 0, 0))
+            if self.dir in ["right", "up-right", "down-right"]:
+                self.attack_rect = self.rect()
+                w = self.attack_rect.w
+                range_ = self.game.items[self.inventory[self.item_chosen][0]]["range"]
+                self.attack_rect.w = range_ // 2
+                self.attack_rect.x += w 
+                self.attack_rect.h = 60
+                self.attack_rect.y -= 20
+                #self.game.render_rect(self.attack_rect, (255, 0, 0))
+            if self.dir == "up":   
+                self.attack_rect = self.rect()
+                range_ = self.game.items[self.inventory[self.item_chosen][0]]["range"]
+                self.attack_rect.h = range_ // 2
+                self.attack_rect.w = 60
+                self.attack_rect.x -= 15
+                self.attack_rect.top = self.attack_rect.top - range_ + 10
+                #self.game.render_rect(self.attack_rect, (255, 0, 0))
+            if self.dir == "down":
+                self.attack_rect = self.rect()
+                h = self.attack_rect.h
+                range_ = self.game.items[self.inventory[self.item_chosen][0]]["range"]
+                self.attack_rect.h = range_ // 2
+                self.attack_rect.y += h
+                self.attack_rect.w = 60
+                self.attack_rect.x -= 20
+                #self.game.render_rect(self.attack_rect, (255, 0, 0))
+
+    def check_transitions(self):
+        if self.pos[1] <= -56:
+            index = (self.game.index[0], self.game.index[1]-1)
+            player = Player(self.game, [11*32, 25*32-1], "down")
+            for i in range(150): self.game.scroll(player.rect().center, 15)
+            if self.game.camera[0] < 0: self.game.camera[0] = 0
+            if self.game.camera[1] < 0: self.game.camera[1] = 0
+            if self.game.camera[0] + self.game.get_display_size()[0]> self.game.size[0]*32: self.game.camera[0] = self.game.size[0]*32-self.game.get_display_size()[0]
+            if self.game.camera[1] + self.game.get_display_size()[1]> self.game.size[1]*32: self.game.camera[1] = self.game.size[1]*32-self.game.get_display_size()[1]
+            self.game.scenes[index].link(player, Shadow(self.game, player, 1.1, (-10, -2)), Swim(self.game, player, 1.1, (-10, 3)))
+            self.game.scenes[self.game.index].objects = list(filter(lambda x : not "@player" in x.tags, self.game.scenes[self.game.index].objects))
+            self.game.scenes[self.game.index].objects = list(filter(lambda x : not "@swim" in x.tags, self.game.scenes[self.game.index].objects))
+            self.game.scenes[self.game.index].objects = list(filter(lambda x : not "@shadow" in x.tags, self.game.scenes[self.game.index].objects))
+            self.game.index = index
+        if self.pos[1] >= 25 * 32:
+            index = (self.game.index[0], self.game.index[1]+1)
+            player = Player(self.game, [11*32, -55], "down")
+            for i in range(150): self.game.scroll(player.rect().center, 15)
+            if self.game.camera[0] < 0: self.game.camera[0] = 0
+            if self.game.camera[1] < 0: self.game.camera[1] = 0
+            if self.game.camera[0] + self.game.get_display_size()[0]> self.game.size[0]*32: self.game.camera[0] = self.game.size[0]*32-self.game.get_display_size()[0]
+            if self.game.camera[1] + self.game.get_display_size()[1]> self.game.size[1]*32: self.game.camera[1] = self.game.size[1]*32-self.game.get_display_size()[1]
+            self.game.scenes[index].link(player, Shadow(self.game, player, 1.1, (-10, -2)), Swim(self.game, player, 1.1, (-10, 3)))
+            self.game.scenes[self.game.index].objects = list(filter(lambda x : not "@player" in x.tags, self.game.scenes[self.game.index].objects))
+            self.game.scenes[self.game.index].objects = list(filter(lambda x : not "@swim" in x.tags, self.game.scenes[self.game.index].objects))
+            self.game.scenes[self.game.index].objects = list(filter(lambda x : not "@shadow" in x.tags, self.game.scenes[self.game.index].objects))
+            self.game.index = index
+        if self.pos[0] <= -56:
+            index = (self.game.index[0]-1, self.game.index[1])
+            player = Player(self.game, [25*32-1, 12*32], "down")
+            for i in range(150): self.game.scroll(player.rect().center, 15)
+            if self.game.camera[0] < 0: self.game.camera[0] = 0
+            if self.game.camera[1] < 0: self.game.camera[1] = 0
+            if self.game.camera[0] + self.game.get_display_size()[0]> self.game.size[0]*32: self.game.camera[0] = self.game.size[0]*32-self.game.get_display_size()[0]
+            if self.game.camera[1] + self.game.get_display_size()[1]> self.game.size[1]*32: self.game.camera[1] = self.game.size[1]*32-self.game.get_display_size()[1]
+            self.game.scenes[index].link(player, Shadow(self.game, player, 1.1, (-10, -2)), Swim(self.game, player, 1.1, (-10, 3)))
+            self.game.scenes[self.game.index].objects = list(filter(lambda x : not "@player" in x.tags, self.game.scenes[self.game.index].objects))
+            self.game.scenes[self.game.index].objects = list(filter(lambda x : not "@swim" in x.tags, self.game.scenes[self.game.index].objects))
+            self.game.scenes[self.game.index].objects = list(filter(lambda x : not "@shadow" in x.tags, self.game.scenes[self.game.index].objects))
+            self.game.index = index
+        if self.pos[0] >= 25 * 32:
+            index = (self.game.index[0]+1, self.game.index[1])
+            player = Player(self.game, [-55, 12*32], "down")
+            for i in range(150): self.game.scroll(player.rect().center, 15)
+            if self.game.camera[0] < 0: self.game.camera[0] = 0
+            if self.game.camera[1] < 0: self.game.camera[1] = 0
+            if self.game.camera[0] + self.game.get_display_size()[0]> self.game.size[0]*32: self.game.camera[0] = self.game.size[0]*32-self.game.get_display_size()[0]
+            if self.game.camera[1] + self.game.get_display_size()[1]> self.game.size[1]*32: self.game.camera[1] = self.game.size[1]*32-self.game.get_display_size()[1]
+            self.game.scenes[index].link(player, Shadow(self.game, player, 1.1, (-10, -2)), Swim(self.game, player, 1.1, (-10, 3)))
+            self.game.scenes[self.game.index].objects = list(filter(lambda x : not "@player" in x.tags, self.game.scenes[self.game.index].objects))
+            self.game.scenes[self.game.index].objects = list(filter(lambda x : not "@swim" in x.tags, self.game.scenes[self.game.index].objects))
+            self.game.scenes[self.game.index].objects = list(filter(lambda x : not "@shadow" in x.tags, self.game.scenes[self.game.index].objects))
+            self.game.index = index
     
     def render(self):
         self.flip_image(self.flip, False)

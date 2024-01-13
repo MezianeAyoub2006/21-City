@@ -9,6 +9,9 @@ class GameObject:
     def kill(self):
         self.erased = True
 
+    def revive(self):
+        self.erased = False
+
     def update(self, scene):
         pass
 

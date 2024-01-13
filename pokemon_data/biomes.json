@@ -25,12 +25,12 @@
     },
 
     {
-        "id" : 6,
+        "id" : 5,
         "name" : "heat_cave"
     },
 
     {
-        "id" : 9,
+        "id" : 6,
         "name" : "water"
     }
 ]

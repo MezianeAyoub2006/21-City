@@ -44,7 +44,6 @@ def load_sprite(path:str, slicing:Tuple[int, int]):
     return [convert_PIL_pygame(image).convert_alpha() for image in sprite.slices]
 
 def load_animation(path:str, slicing:Tuple[int, int], frames:int):
-    print(PATH + path, PATH)
     sprite = Slicer(PATH + path)
     sprite.slice_(slicing[0], slicing[1])
     sprite.organise(frames)

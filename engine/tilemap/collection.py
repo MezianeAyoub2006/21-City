@@ -40,18 +40,22 @@ class TilemapCollection:
     def get_tiles(self, location):
         tiles = []
         for tilemap in self.tilemaps.values():
-            tiles.append((tilemap.tilemap[location], "#solid" in tilemap.tags))
+            try:
+                tiles.append((tilemap.tilemap[location], tilemap.tags, tilemap.z_pos))
+            except KeyError:
+                pass
         return tiles
-    
+
     def get_solid_map(self, begin_pos, end_pos):
-        matrix = [[0 for j in range(abs(begin_pos[0] - end_pos[0]))] for i in range(abs(begin_pos[1] - end_pos[1]))]
-        for x in range(abs(begin_pos[0] - end_pos[0])):
-            for y in range(abs(begin_pos[1] - end_pos[1])):
-                try:
-                    tiles = self.get_tiles((begin_pos[0]+x, begin_pos[1]+y))
-                    matrix[y][x] = int(any(tile[1] == True for tile in tiles))
-                except:
-                    pass
+        start_x, end_x = min(begin_pos[0], end_pos[0]), max(begin_pos[0], end_pos[0])
+        start_y, end_y = min(begin_pos[1], end_pos[1]), max(begin_pos[1], end_pos[1])
+        matrix = []
+        for y in range(start_y, end_y + 1):
+            row = []
+            for x in range(start_x, end_x + 1):
+                tiles = self.get_tiles((x, y))
+                row.append(int(any("#solid" in tile[1] for tile in tiles)))
+            matrix.append(row)
         return matrix
 
 

@@ -14,9 +14,11 @@ class Pokemon(Entity):
         self.collide = True
         self.moving = False
         self.move_by_itself = True
-        self.seen = False
+        self.seen = True
         if game.labels == {}: generate_labels(game)
-        self.aggressive = aggressive
+        self.aggressive = False
+        self.focus = 2
+        self.stay = False
         self.fairy = fairy
         self.shiny = True if random.randint(1, self.game.shiney_chance) == 1 else False
         self.tags.append("@pokemon")
@@ -24,9 +26,12 @@ class Pokemon(Entity):
         self.dir = ['right', "up", "left", "down", "up-left", "up-right", "down-right", "up-left", "down-left"][random.randint(0, 7)]
         self.state = 1
         self.timer = 0
+        self.time = 0.3
+        self.toggle_player = None
         self.spawn_pos = self.pos.copy()
         self.asset = self.game.assets['pokemons'][id-1].copy()
         self.speed = max(0.4, self.get_stat("Speed")/50)
+        self.ac_speed = self.speed
         self.level = level
         self.randomness = (
             (1/self.get_stat("Attack"))*5000, 
@@ -37,7 +42,10 @@ class Pokemon(Entity):
                 self.get_stat("Sp. Defense")
                 )
         )
+        self.max_life = self.get_stat("HP")
+        self.life = self.max_life
         if self.shiny: self.set_asset_to_be_shiny()
+        self.types = self.get_data()["type"]
     
     def set_asset_to_be_shiny(self): 
         for x in range(128):
@@ -45,17 +53,26 @@ class Pokemon(Entity):
                 pxl = self.asset.get_at((x, y))
                 self.asset.set_at((x, y), (pxl[1], pxl[2], pxl[0], pxl[3]))
     
-    def goto(self, pos, escape=False): 
-        if distance(pos, self.pos) <= 32:
-            return
-        target_vector = pygame.math.Vector2(pos[0] - self.pos[0], pos[1] - self.pos[1])
-        target_vector.normalize_ip()
-        velocity = target_vector * self.speed
-        if escape:
-            velocity = -velocity
-        velocity *= 1.5
-        self.vel = [velocity.x, velocity.y]
-        self.dir = direction(self.vel)
+    def goto(self, pos, escape=False, factor=1.2): 
+        if distance(self.pos, pos) >= 15:
+            target_vector = pygame.math.Vector2(pos[0] - self.pos[0], pos[1] - self.pos[1])
+            target_vector.normalize_ip()
+            velocity = target_vector * self.ac_speed
+            velocity *= factor
+            if escape:
+                velocity *= -1
+            self.vel = [velocity.x, velocity.y]
+            self.dir = direction(self.vel)
+    
+    def stay_goto(self, pos, escape, factor):
+        if self.time <= 0.3:
+            self.time -= self.game.get_dt()*(1/60)
+        self.stay = pos
+        if self.time < 0:
+            self.stay = False
+            self.time = 0.3
+        else:
+            self.goto(self.stay, escape, factor)
 
     def get_stat(self, stat):
         return self.game.dex_data[self.id-1]["base"][stat]
@@ -63,14 +80,26 @@ class Pokemon(Entity):
     def get_data(self):
         return self.game.dex_data[self.id-1]
 
+    def scene_init(self, scene):
+        scene.link(Swim(self.game, self, 1.1, (-10, 3)))
+
     def update(self, scene):
+        try:
+            player = self.game.scenes[self.game.index].get_objects_by_tag("@player")[0]
+        except:
+            player = Entity(self.game, [0, 0], [0, 0], [0, 0], 0)
         self.z_pos = ((1/(self.game.size[1]*self.game.tile_size))*self.rect().bottom + 2)
-        if self.moving or self.aggressive or self.fairy:
+        if self.focus <= 0:
+            if self.stay == False:
+                self.vel = [0, 0]
+            if random.randint(0, 120) == 1:
+                self.focus = random.randint(20, 50)/10
+        if (self.moving or self.aggressive or self.fairy) and not self.vel == [0, 0]:
             self.timer += (self.speed/10)*self.game.get_dt()
         if self.timer >= 1:
             self.timer = 0
             self.state = not self.state
-        if distance(self.pos, self.game.player.rect().center) <= 32*6:
+        if distance(self.pos, player.rect().center) <= 32*6:
             self.seen = True
         Entity.update(self, scene)
         if not (self.fairy and self.seen) and not (self.aggressive and self.seen) and self.move_by_itself:
@@ -83,13 +112,25 @@ class Pokemon(Entity):
         if self.fairy and self.seen and (self.rect().centerx <= 10 or self.rect().centery <= 10):
             self.kill()
         if self.seen:
-            if self.fairy:
-                self.goto(self.game.player.rect().center, True)
-            if self.aggressive:
-                self.goto([self.game.player.rect().centerx-20, self.game.player.rect().centery-20])
+            if self.stay == False:
+                if self.fairy:
+                    self.goto(player.rect().center, True)
+                if self.aggressive:
+                    if self.focus > 0:
+                        self.goto([player.rect().centerx-20, player.rect().centery-20])
+                        self.focus -= (1/60) * self.game.get_dt()
+        if self.rect().colliderect(player.attack_rect) or self.stay:  
+            if self.stay == False:
+                self.toggle_player = player.rect().center  
+            self.stay_goto(self.toggle_player, True, self.game.items[player.attack]["knockback"])
+
+        self.render_label()
         
     def render_label(self):
-        self.game.render(self.game.labels[self.level], [self.pos[0]+5, self.pos[1] - min(float(self.get_data()["profile"]["height"].split(" ")[0])*15 + 5, 20)])
+        self.game.render(self.game.labels[self.level], [self.pos[0]+5, self.pos[1] - min(float(self.get_data()["profile"]["height"].split(" ")[0])*15 + 10, 40)])
+        life_pos = [self.pos[0]+5, self.pos[1] - min(float(self.get_data()["profile"]["height"].split(" ")[0])*15 - 10, 40)]
+        self.game.render_rect(pygame.rect.Rect(life_pos, (29, 6)), (0, 0, 0))
+        self.game.render_rect(pygame.rect.Rect((life_pos[0]+1, life_pos[1]+1), (30*(self.life/self.max_life)-3, 3)), (255, 0, 0))
 
     def get_image_from_dir(self):
         if self.state == 0:

@@ -28,3 +28,13 @@ def direction(vector):
     index = round(angle / 90) % 4  
     return directions[index]
 
+def generate_room_path(line_count = 5):
+    neighboors = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+    line_count = line_count
+    positions = [(0, 0)]
+    for i in range(line_count):
+        random.shuffle(neighboors)
+        for offset in neighboors:
+            if not (positions[-1][0] + offset[0], positions[-1][1] + offset[1]) in positions:
+                positions.append((positions[-1][0] + offset[0], positions[-1][1] + offset[1]))
+    return positions

@@ -1,0 +1,21 @@
+[
+    {
+        "id" : 0,
+        "name" : "scratch"
+    },
+
+    {
+        "id" : 1,
+        "name" : "dodge"
+    },
+
+    {
+        "id" : 2,
+        "name" : "lazer"
+    },
+
+    {
+        "id" : 3,
+        "name" : "spread"
+    }
+]
