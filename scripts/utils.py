@@ -1,4 +1,4 @@
-import random, math, heapq
+import random, math
 
 def range_list(list_):
     l = []
@@ -28,7 +28,7 @@ def direction(vector):
     index = round(angle / 90) % 4  
     return directions[index]
 
-def generate_room_path(line_count = 5):
+def generate_room_path(line_count = 2):
     neighboors = [(1, 0), (-1, 0), (0, 1), (0, -1)]
     line_count = line_count
     positions = [(0, 0)]

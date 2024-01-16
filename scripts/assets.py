@@ -28,4 +28,6 @@ ATTACKS = {
     "iron_sword_attack" : scale_image_list(load_sprite("attacks/iron_sword.png", (64, 64)), (128, 128)),
     "fire_sword_attack" : scale_image_list(load_sprite("attacks/fire_sword.png", (64, 64)), (128, 128)),
     "club_attack" : scale_image_list(load_sprite("attacks/club.png", (64, 64)), (128, 128)),
+    "push_wand_attack" : scale_image_list(load_sprite("attacks/push_wand.png", (64, 64)), (128, 128)),
+    "trident_attack" : scale_image_list(load_sprite("attacks/trident.png", (64, 64)), (128, 128)),
 }

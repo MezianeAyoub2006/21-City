@@ -25,7 +25,8 @@ ctx.state = 1
 ctx.items = ITEMS
 
 player = Player(ctx, [30, 30], "down")
-ctx.scenes = generate_room(ctx, 0)
+ctx.biome = 0
+ctx.scenes = generate_room(ctx, ctx.biome)
 ctx.index = (0, 0)
 ctx.scenes[(0, 0)].link(player, Shadow(ctx, player, 1.1, (-10, -2)), Swim(ctx, player, 1.1, (-10, 3))) 
 ctx.space = False
@@ -56,6 +57,10 @@ def game_loop():
                     player.item_chosen = 3
                 if event.key == pygame.K_5:
                     player.item_chosen = 4
+                if event.key == pygame.K_BACKSPACE:
+                    player.inventory[player.item_chosen] = None
+                    if player.inventory == [None, None, None, None, None]:
+                        player.inventory[0] = (0, 1)
             if event.key == pygame.K_SPACE:
                 ctx.space = True
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -67,7 +72,6 @@ def game_loop():
     if ctx.state == 0: 
         ctx.scenes[ctx.index].update()
         ctx.scroll(player.rect().center, 15)
-        ctx.draw_text(str(ctx.index), "main30", (2, 2))
         player.inventory_()
 
     if ctx.state == 1: 

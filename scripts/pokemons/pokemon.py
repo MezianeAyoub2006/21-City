@@ -7,6 +7,14 @@ def generate_labels(game):
     for i in range(1, 101):
         game.labels[i] = game.render_text(f"Lv. {i}", "main15", [0, 0])
 
+class Attack(GameObject):
+    def __init__(self, game, type, speed, damage, look):
+        GameObject.__init__(self, game, 10)
+        self.type = type
+        self.speed = speed
+        self.damaga = damage
+        self.look = look
+
 class Pokemon(Entity):
     def __init__(self, game, pos, id, level, z_pos, fairy=False, aggressive=False):
         self.id = id
@@ -46,6 +54,7 @@ class Pokemon(Entity):
         self.life = self.max_life
         if self.shiny: self.set_asset_to_be_shiny()
         self.types = self.get_data()["type"]
+        self.damage_couldown = -1
     
     def set_asset_to_be_shiny(self): 
         for x in range(128):
@@ -83,13 +92,46 @@ class Pokemon(Entity):
     def scene_init(self, scene):
         scene.link(Swim(self.game, self, 1.1, (-10, 3)))
 
+    def deal_damage(self, damage, player):
+        return ((damage/self.get_stat("Defense")))*20*(((player.level/self.level)/2)*0.15)*(2 if self.id in [60, 59, 58, 57, 56, 55] else 7)
+
     def update(self, scene):
+        Entity.update(self, scene)
+        if self.pos[0] < 0 or self.pos[1] < 0 or self.pos[0] > 25 * 32 or self.pos[1] > 25 * 32:
+            self.pos = self.spawn_pos.copy()
+            self.stay = False
+        else:
+            self.stay = False
         try:
             player = self.game.scenes[self.game.index].get_objects_by_tag("@player")[0]
         except:
             player = Entity(self.game, [0, 0], [0, 0], [0, 0], 0)
         self.z_pos = ((1/(self.game.size[1]*self.game.tile_size))*self.rect().bottom + 2)
+        if self.life <= 0:
+            self.kill()
+            player.xp += self.level * (sum(self.get_stat(i) for i in ["Attack", "Sp. Attack", "Sp. Defense", "Defense", "Speed", "HP"]))/75
+            if self.game.biome == 0:
+                if random.randint(0, 10) == 5:
+                    for i, item in enumerate(player.inventory):
+                        if item == None:
+                            player.inventory[i] = (1, 1)
+                            break
+                        if item[0] == 1:
+                            player.inventory[i] = (player.inventory[i][0], player.inventory[i][1]+1)
+                            break
+            if random.randint(0, 10) == 5:
+                    for i, item in enumerate(player.inventory):
+                        if item == None:
+                            player.inventory[i] = (7, 1)
+                            break
+                        if item[0] == 7:
+                            player.inventory[i] = (player.inventory[i][0], player.inventory[i][1]+1)
+                            break
+        if self.life > self.max_life:
+            self.life = self.max_life
         if self.focus <= 0:
+            if self.damage_couldown <= 0:
+                self.life += self.game.get_dt()/60
             if self.stay == False:
                 self.vel = [0, 0]
             if random.randint(0, 120) == 1:
@@ -101,7 +143,6 @@ class Pokemon(Entity):
             self.state = not self.state
         if distance(self.pos, player.rect().center) <= 32*6:
             self.seen = True
-        Entity.update(self, scene)
         if not (self.fairy and self.seen) and not (self.aggressive and self.seen) and self.move_by_itself:
             self.basic_ai(self.speed, *self.randomness)
         self.get_image_from_dir()
@@ -120,17 +161,32 @@ class Pokemon(Entity):
                         self.goto([player.rect().centerx-20, player.rect().centery-20])
                         self.focus -= (1/60) * self.game.get_dt()
         if self.rect().colliderect(player.attack_rect) or self.stay:  
+            self.aggressive = True
             if self.stay == False:
                 self.toggle_player = player.rect().center  
-            self.stay_goto(self.toggle_player, True, self.game.items[player.attack]["knockback"])
-
+            if player.attack != -1:
+                self.stay_goto(self.toggle_player, True, min(self.game.items[player.attack]["knockback"]*(20/max(self.level, 10))*(player.level/50)*(0.75 if self.id in [60, 59, 58, 57, 56, 55] else 1), 10))
+                if self.rect().colliderect(player.attack_rect) and self.damage_couldown < 0:
+                    self.damage_couldown = 0.3
+                    self.life -= self.deal_damage(self.game.items[player.attack]["damage"], player)
+        if self.damage_couldown > 0:
+            self.damage_couldown -= self.game.get_dt()/60
+        if distance(player.rect().center, self.rect().center) <= self.get_stat("Attack")/3:
+            player.life -= (self.get_stat("Attack")*(self.level))/(player.level*200)
         self.render_label()
+    
         
     def render_label(self):
         self.game.render(self.game.labels[self.level], [self.pos[0]+5, self.pos[1] - min(float(self.get_data()["profile"]["height"].split(" ")[0])*15 + 10, 40)])
-        life_pos = [self.pos[0]+5, self.pos[1] - min(float(self.get_data()["profile"]["height"].split(" ")[0])*15 - 10, 40)]
-        self.game.render_rect(pygame.rect.Rect(life_pos, (29, 6)), (0, 0, 0))
-        self.game.render_rect(pygame.rect.Rect((life_pos[0]+1, life_pos[1]+1), (30*(self.life/self.max_life)-3, 3)), (255, 0, 0))
+        if not self.id in [55, 56, 57, 58, 59, 60]:
+            life_pos = [self.pos[0]+5, self.pos[1] - min(float(self.get_data()["profile"]["height"].split(" ")[0])*15 - 10, 40)]
+            self.game.render_rect(pygame.rect.Rect(life_pos, (29, 6)), (0, 0, 0))
+            self.game.render_rect(pygame.rect.Rect((life_pos[0]+1, life_pos[1]+1), ((30*(self.life/self.max_life)-3), 3)), (255, 0, 0))
+        else:
+            life_pos = [self.pos[0]-30, self.pos[1] - min(float(self.get_data()["profile"]["height"].split(" ")[0])*15 - 10, 40)]
+            self.game.render_rect(pygame.rect.Rect(life_pos, (99, 6)), (0, 0, 0))
+            self.game.render_rect(pygame.rect.Rect((life_pos[0]+1, life_pos[1]+1), ((100*(self.life/self.max_life)-3), 3)), (255, 0, 0))
+        
 
     def get_image_from_dir(self):
         if self.state == 0:

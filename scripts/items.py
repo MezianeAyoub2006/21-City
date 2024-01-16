@@ -2,12 +2,14 @@ ITEMS = [
     {
         "name" : "Wood Stick",
         "type" : "melee",
-        "damage" : 5,
-        "couldown" : 0.2,
-        "knockback" : 3.5,
+        "damage" : 1000,
+        "couldown" : 0.75,
+        "knockback" : 5,
         "animation" : "wooden_stick_attack",
         "loffset" : [-74, -65],
         "roffset" : [-10, -65],
+        "doffset" : [-70, -65],
+        "uoffset" : [-3, -85],
         "speed" : 0.4,
         "range" : 60
     },
@@ -15,52 +17,101 @@ ITEMS = [
     {
         "name" : "Iron Sword",
         "type" : "melee",
-        "damage" : 5,
-        "couldown" : 0.5,
+        "damage" : 35,
+        "couldown" : 0.4,
         "knockback" : 3.5,
         "animation" : "iron_sword_attack",
         "loffset" : [-74, -65],
         "roffset" : [-10, -65],
+        "doffset" : [-70, -65],
+        "uoffset" : [-7, -80],
         "speed" : 0.4,
-        "range" : 60
+        "range" : 80
     },
 
     {
         "name" : "Fire Sword",
         "type" : "melee",
-        "damage" : 7,
-        "couldown" : 0.5,
+        "damage" : 60,
+        "couldown" : 0.4,
         "knockback" : 3.5,
         "animation" : "fire_sword_attack",
         "loffset" : [-74, -65],
         "roffset" : [-10, -65],
+        "doffset" : [-70, -65],
+        "uoffset" : [-7, -80],
         "speed" : 0.3,
-        "range" : 60
+        "range" : 80
     },
 
     {
         "name" : "Fighting Club",
         "type" : "melee",
-        "damage" : 15,
-        "couldown" : 3,
+        "damage" : 80,
+        "couldown" : 2.5,
         "knockback" : 7,
         "animation" : "club_attack",
         "loffset" : [-74, -65],
         "roffset" : [-10, -65],
+        "doffset" : [-77, -60],
+        "uoffset" : [-10, -85],
         "speed" : 0.15,
+        "range" : 120
+    },
+
+    {
+        "name" : "Push Wand",
+        "type" : "melee",
+        "damage" : 40,
+        "couldown" : 2,
+        "knockback" : 20,
+        "animation" : "push_wand_attack",
+        "loffset" : [-90, -45],
+        "roffset" : [5, -45],
+        "doffset" : [-50, -60],
+        "uoffset" : [14, -93],
+        "speed" : 0.4,
+        "range" : 200
+    },
+
+    {
+        "name" : "Trident",
+        "type" : "melee",
+        "damage" : 90,
+        "couldown" : 0.3,
+        "knockback" : 1,
+        "animation" : "trident_attack",
+        "loffset" : [-74, -30],
+        "roffset" : [-10, -30],
+        "doffset" : [-40, -65],
+        "uoffset" : [23, -80],
+        "speed" : 1.5,
+        "range" : 150
+    },
+
+    {
+        "name" : "Knife",
+        "type" : "melee",
+        "damage" : 35,
+        "couldown" : 0.4,
+        "knockback" : 3.5,
+        "animation" : "iron_sword_attack",
+        "loffset" : [-74, -65],
+        "roffset" : [-10, -65],
+        "doffset" : [-70, -65],
+        "uoffset" : [-7, -80],
+        "speed" : 0.4,
         "range" : 80
     },
 
     {
-        "name" : "Feather"
+        "name" : "Heal Potion",
+        "type" : "cons"
     },
 
     {
-        "name" : "Golden Feather"
-    },
-
-    {
-        "name" : "Stone Club"
+        "name" : "Feather",
+        "type" : "dash"
     },
 
     {
