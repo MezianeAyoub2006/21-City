@@ -1,5 +1,8 @@
 from engine import *
-import pygame, os
+import pygame, os, json 
+
+with open("test.json", "r") as f:
+    data = json.load(f)
 
 # on définit un raccourcit vers le chemin des images
 set_path("data/images/")
@@ -24,8 +27,8 @@ ctx.battle = None
 ctx.state = 1
 ctx.items = ITEMS
 
-player = Player(ctx, [30, 30], "down")
-ctx.biome = 0
+player = Player(ctx, [30, 30], "down", 100, data["player_level"], data["player_inventory"])
+ctx.biome = data["biome"]
 ctx.scenes = generate_room(ctx, ctx.biome)
 ctx.index = (0, 0)
 ctx.scenes[(0, 0)].link(player, Shadow(ctx, player, 1.1, (-10, -2)), Swim(ctx, player, 1.1, (-10, 3))) 

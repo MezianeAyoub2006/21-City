@@ -7,9 +7,6 @@ class GameContext:
         pygame.init()
         self.screen = pygame.display.set_mode(resolution, flags, vsync=vsync)
         self.clock = pygame.time.Clock()
-        icon_path = os.path.join(__file__[:-10], "logo.png")
-        pygame.display.set_caption("Blank Project", icon_path)
-        pygame.display.set_icon(pygame.image.load(icon_path).convert_alpha())
         self.camera = [0, 0]
         self.fonts = {}
         self.dt = 1

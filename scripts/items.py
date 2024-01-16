@@ -2,7 +2,7 @@ ITEMS = [
     {
         "name" : "Wood Stick",
         "type" : "melee",
-        "damage" : 1000,
+        "damage" : 20,
         "couldown" : 0.75,
         "knockback" : 5,
         "animation" : "wooden_stick_attack",

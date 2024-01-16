@@ -23,7 +23,7 @@ def random_position_inside_circle(radius, center=(0, 0)):
 
 def direction(vector):
     angle = math.degrees(math.atan2(vector[1], vector[0]))
-    angle += 360 if angle < 0 else 0  # Ensure the angle is positive
+    angle += 360 if angle < 0 else 0
     directions = ["right", "down", "left","up"]
     index = round(angle / 90) % 4  
     return directions[index]

@@ -5,6 +5,13 @@
             "english": "Bulbasaur",
             "french": "Bulbizarre"
         },
+
+        "ia" : {
+            "type" : 0,
+            "await" : 0.2,
+            "speed_f" : 1.5
+        },
+
         "type": [
             "grass",
             "poison"
@@ -62,6 +69,11 @@
             "grass",
             "poison"
         ],
+        "ia" : {
+            "type" : 0,
+            "await" : 0.2,
+            "speed_f" : 1.5
+        },
         "base": {
             "HP": 60,
             "Attack": 62,
@@ -119,6 +131,11 @@
             "grass",
             "poison"
         ],
+        "ia" : {
+            "type" : 0,
+            "await" : 0.2,
+            "speed_f" : 1.5
+        },
         "base": {
             "HP": 80,
             "Attack": 82,
@@ -165,6 +182,11 @@
         "name": {
             "english": "Charmander",
             "french": "Salam\u00c3\u00a8che"
+        },
+        "ia" : {
+            "type" : 0,
+            "await" : 0.2,
+            "speed_f" : 1.5
         },
         "type": [
             "fire"
@@ -217,6 +239,11 @@
         "name": {
             "english": "Charmeleon",
             "french": "Reptincel"
+        },
+        "ia" : {
+            "type" : 0,
+            "await" : 0.2,
+            "speed_f" : 1.5
         },
         "type": [
             "fire"
@@ -274,6 +301,11 @@
             "english": "Charizard",
             "french": "Dracaufeu"
         },
+        "ia" : {
+            "type" : 0,
+            "await" : 0.2,
+            "speed_f" : 1.5
+        },
         "type": [
             "fire",
             "flying"
@@ -324,6 +356,11 @@
         "name": {
             "english": "Squirtle",
             "french": "Carapuce"
+        },
+        "ia" : {
+            "type" : 0,
+            "await" : 0.2,
+            "speed_f" : 1.5
         },
         "type": [
             "water"
@@ -376,6 +413,11 @@
         "name": {
             "english": "Wartortle",
             "french": "Carabaffe"
+        },
+        "ia" : {
+            "type" : 0,
+            "await" : 0.2,
+            "speed_f" : 1.5
         },
         "type": [
             "water"
@@ -433,6 +475,11 @@
             "english": "Blastoise",
             "french": "Tortank"
         },
+        "ia" : {
+            "type" : 0,
+            "await" : 0.2,
+            "speed_f" : 1.5
+        },
         "type": [
             "water"
         ],
@@ -482,6 +529,11 @@
         "name": {
             "english": "Caterpie",
             "french": "Chenipan"
+        },
+        "ia" : {
+            "type" : 0,
+            "await" : 0.2,
+            "speed_f" : 1.5
         },
         "type": [
             "bug"
@@ -537,6 +589,11 @@
         "type": [
             "bug"
         ],
+        "ia" : {
+            "type" : 0,
+            "await" : 0.2,
+            "speed_f" : 1.5
+        },
         "base": {
             "HP": 50,
             "Attack": 20,
@@ -584,6 +641,11 @@
         "name": {
             "english": "Butterfree",
             "french": "Papilusion"
+        },
+        "ia" : {
+            "type" : 0,
+            "await" : 0.2,
+            "speed_f" : 1.5
         },
         "type": [
             "bug",
@@ -634,6 +696,11 @@
         "name": {
             "english": "Pidgey",
             "french": "Roucool"
+        },
+        "ia" : {
+            "type" : 0,
+            "await" : 0.2,
+            "speed_f" : 1.5
         },
         "type": [
             "normal",
@@ -690,6 +757,11 @@
         "name": {
             "english": "Pidgeotto",
             "french": "Roucoups"
+        },
+        "ia" : {
+            "type" : 0,
+            "await" : 0.2,
+            "speed_f" : 1.5
         },
         "type": [
             "normal",
@@ -755,6 +827,11 @@
             "normal",
             "flying"
         ],
+        "ia" : {
+            "type" : 0,
+            "await" : 0.2,
+            "speed_f" : 1.5
+        },
         "base": {
             "HP": 83,
             "Attack": 80,
@@ -804,6 +881,11 @@
         "name": {
             "english": "Rattata",
             "french": "Rattata"
+        },
+        "ia" : {
+            "type" : 0,
+            "await" : 0.2,
+            "speed_f" : 1.5
         },
         "type": [
             "normal"
@@ -860,6 +942,11 @@
             "english": "Raticate",
             "french": "Rattatac"
         },
+        "ia" : {
+            "type" : 0,
+            "await" : 0.2,
+            "speed_f" : 1.5
+        },
         "type": [
             "normal"
         ],
@@ -912,6 +999,11 @@
         "name": {
             "english": "Chansey",
             "french": "Leveinard"
+        },
+        "ia" : {
+            "type" : 0,
+            "await" : 0.2,
+            "speed_f" : 1.5
         },
         "type": [
             "normal"
@@ -971,6 +1063,11 @@
         "name": {
             "english": "Vulpix",
             "french": "Goupix"
+        },
+        "ia" : {
+            "type" : 0,
+            "await" : 0.2,
+            "speed_f" : 1.5
         },
         "type": [
             "fire"

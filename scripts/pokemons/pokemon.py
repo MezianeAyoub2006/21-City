@@ -8,16 +8,48 @@ def generate_labels(game):
         game.labels[i] = game.render_text(f"Lv. {i}", "main15", [0, 0])
 
 class Attack(GameObject):
-    def __init__(self, game, type, speed, damage, look):
+    def __init__(self, pokemon, game, type, speed, damage, look):
         GameObject.__init__(self, game, 10)
         self.type = type
         self.speed = speed
         self.damaga = damage
+        self.pos = list(pokemon.rect().center)
         self.look = look
+        try:
+            player = self.game.scenes[self.game.index].get_objects_by_tag("@player")[0]
+        except:
+            player = Entity(self.game, [0, 0], [0, 0], [0, 0], 0)
+        if self.type == 0:
+            target = player.rect().center
+            self.vector = pygame.math.Vector2(target[0] - self.pos[0], target[1] - self.pos[1])
+            self.vector.normalize_ip()
+            self.vector *= self.speed
+        if type == 3:
+            self.dir = pokemon.dir
+        if type == 1:
+            self.angle = random.randint(0, 360)
+            self.vector = pygame.math.Vector2(1, 0)
+            self.vector.rotate_ip(self.angle)
+            self.vector *= self.speed
+    def update(self, scene):
+        try:
+            player = self.game.scenes[self.game.index].get_objects_by_tag("@player")[0]
+        except:
+            player = Entity(self.game, [0, 0], [0, 0], [0, 0], 0)
+        if self.type == 0 or self.type == 1:
+            self.pos[0] += self.vector.x
+            self.pos[1] += self.vector.y
+        self.game.render(self.game.assets["pokemon_attack0"][0] if self.look == 0 else self.game.assets["pokemon_attack1"][0], self.pos)
+
 
 class Pokemon(Entity):
     def __init__(self, game, pos, id, level, z_pos, fairy=False, aggressive=False):
         self.id = id
+        if self.id in [60, 59, 58, 57, 56, 55]:
+            self.timey = 0.1
+        else:
+            self.timey = 0.1
+        self.attack_timer = 0
         Entity.__init__(self, game, pos, (20, 20), (12,17), z_pos)
         self.collide = True
         self.moving = False
@@ -96,6 +128,12 @@ class Pokemon(Entity):
         return ((damage/self.get_stat("Defense")))*20*(((player.level/self.level)/2)*0.15)*(2 if self.id in [60, 59, 58, 57, 56, 55] else 7)
 
     def update(self, scene):
+        self.attack_timer += (1/60) * self.game.get_dt()
+        if self.attack_timer >= self.timey:
+            self.attack_timer = 0
+            if self.aggressive and self.vel == [0, 0]:
+                scene.link(Attack(self, self.game, 1, self.ac_speed*2.5, 4, 0))
+
         Entity.update(self, scene)
         if self.pos[0] < 0 or self.pos[1] < 0 or self.pos[0] > 25 * 32 or self.pos[1] > 25 * 32:
             self.pos = self.spawn_pos.copy()

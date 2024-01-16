@@ -30,4 +30,6 @@ ATTACKS = {
     "club_attack" : scale_image_list(load_sprite("attacks/club.png", (64, 64)), (128, 128)),
     "push_wand_attack" : scale_image_list(load_sprite("attacks/push_wand.png", (64, 64)), (128, 128)),
     "trident_attack" : scale_image_list(load_sprite("attacks/trident.png", (64, 64)), (128, 128)),
+    "pokemon_attack0" : scale_image_list(load_sprite("attacks/pokemon_range0.png", (8, 8)), (16, 16)),
+    "pokemon_attack1" : scale_image_list(load_sprite("attacks/pokemon_range1.png", (16, 16)), (32, 32)),
 }
