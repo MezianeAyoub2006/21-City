@@ -2,8 +2,8 @@ ITEMS = [
     {
         "name" : "Wood Stick",
         "type" : "melee",
-        "damage" : 20,
-        "couldown" : 0.75,
+        "damage" : 25,
+        "couldown" : 0.6,
         "knockback" : 5,
         "animation" : "wooden_stick_attack",
         "loffset" : [-74, -65],
@@ -47,15 +47,15 @@ ITEMS = [
     {
         "name" : "Fighting Club",
         "type" : "melee",
-        "damage" : 80,
-        "couldown" : 2.5,
-        "knockback" : 7,
+        "damage" : 75,
+        "couldown" : 3.5,
+        "knockback" : 8,
         "animation" : "club_attack",
         "loffset" : [-74, -65],
         "roffset" : [-10, -65],
         "doffset" : [-77, -60],
         "uoffset" : [-10, -85],
-        "speed" : 0.15,
+        "speed" : 0.175,
         "range" : 120
     },
 
@@ -77,7 +77,7 @@ ITEMS = [
     {
         "name" : "Trident",
         "type" : "melee",
-        "damage" : 90,
+        "damage" : 1000,
         "couldown" : 0.3,
         "knockback" : 1,
         "animation" : "trident_attack",

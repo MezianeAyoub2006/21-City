@@ -11,16 +11,18 @@ SPRITES = {
 }
 
 OTHER = {
-    "shadow" : pygame.transform.scale(load_image("player/shadow.png"), (64, 64))
+    "shadow" : pygame.transform.scale(load_image("player/shadow.png"), (64, 64)),
+    "portal" : scale_image_list(load_sprite("other/portal.png", (89, 98)), (89*2, 98*2))
 }
 
 MENU = {
-    "darkrai" : load_image("menu/darkrai.png"),
+    "darkrai" : pygame.transform.scale(load_image("menu/darkrai.png"), (250*35, 224)),
     "play_button" : load_sprite("menu/play_button.png", (197, 68)),
     "logo" : load_image("menu/logo.png"),
     "press_enter" : load_image("menu/press_enter.png"),
     "slot" : load_sprite("menu/slot.png", (44, 44)),
-    "items" : load_sprite("items/items.png", (32, 32))
+    "items" : load_sprite("items/items.png", (32, 32)),
+    "bg" : load_image("menu/bg.png")
 }
 
 ATTACKS = {

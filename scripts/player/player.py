@@ -15,6 +15,7 @@ class Player(Entity, Animated):
         self.tags.append("@player")
         self.transition_data = None
         self.inventory = inventory.copy()
+        self.inventory = list(map(lambda x : None if x == "" else x, self.inventory))
         self.couldown = [0, 0, 0, 0, 0]
         self.item_chosen = 0
         self.life = life
@@ -26,51 +27,76 @@ class Player(Entity, Animated):
         self.attack_rect = pygame.Rect(0, 0, 0, 0)
     
     def update(self, scene):
-        xp_c = self.level**(1.35) + 25
-        if self.xp > xp_c:
-            self.level += self.xp // xp_c
-            self.xp = self.xp % xp_c
-        self.z_pos = ((1/(self.game.size[1]*self.game.tile_size))*self.rect().bottom + 2)
-        keys = pygame.key.get_pressed()
-        Entity.update(self, scene)
-        self.stop = False
-        keys = pygame.key.get_pressed()
-        if (keys[pygame.K_LEFT] and keys[pygame.K_RIGHT]) or (keys[pygame.K_UP] and keys[pygame.K_DOWN]):
-            self.stop = True
-        elif (keys[pygame.K_DOWN] or keys[pygame.K_UP]) and keys[pygame.K_LEFT]:
-            self.set_animation(1)
-            self.dir = "left"
-            self.flip = False
-        elif (keys[pygame.K_DOWN] or keys[pygame.K_UP]) and keys[pygame.K_RIGHT]:
-            self.set_animation(1)
-            self.dir = "right"
-            self.flip = True
-        elif keys[pygame.K_UP]:
-            self.dir = "up"
-            self.set_animation(0)
-        elif keys[pygame.K_DOWN]:
-            self.dir = "down"
-            self.set_animation(2)
-        elif keys[pygame.K_LEFT]:
-            self.dir = "left"
-            self.set_animation(1)
-            self.flip = False
-        elif keys[pygame.K_RIGHT]:
-            self.dir = "right"
-            self.set_animation(1)
-            self.flip = True
-        self.vel = [(int(keys[pygame.K_RIGHT]) - int(keys[pygame.K_LEFT]))*self.speed,(int(keys[pygame.K_DOWN]) - int(keys[pygame.K_UP]))*self.speed]
-        if self.stop : self.vel = [0, 0]
-        if abs(self.vel[0]) == abs(self.vel[1]) != 0:
-            self.vel[0] *= (1/1.4)
-            self.vel[1] *= (1/1.4)
-        if (keys[pygame.K_DOWN] or keys[pygame.K_LEFT] or keys[pygame.K_RIGHT] or keys[pygame.K_UP]) and not self.stop:
-            self.animate(self.game.get_dt())
-        else:
-            self.set_animation_cursor(2)
+        self.level = min(100, self.level)
+        for idx, item in enumerate(self.inventory):
+            if item != None:
+                if item[1] == 0:
+                    self.inventory[idx] = None
+        if not self.game.pause and self.game.transition_count == 0:
+            if self.life <= 0:
+                self.game.init(1, 0, 5, [[0, 1], None, None])
+                return
+            xp_c = self.level**(1.37) + 5*([0, 5, 10, 5, 50, 40, -10][self.game.biome])
+            if self.xp > xp_c:
+                self.level += self.xp // xp_c
+                self.xp = self.xp % xp_c
+            self.z_pos = ((1/(self.game.size[1]*self.game.tile_size))*self.rect().bottom + 2)
+            keys = pygame.key.get_pressed()
+            Entity.update(self, scene)
+            self.stop = False
+            keys = pygame.key.get_pressed()
+            if (keys[pygame.K_LEFT] and keys[pygame.K_RIGHT]) or (keys[pygame.K_UP] and keys[pygame.K_DOWN]):
+                self.stop = True
+            elif (keys[pygame.K_DOWN] or keys[pygame.K_UP]) and keys[pygame.K_LEFT]:
+                self.set_animation(1)
+                self.dir = "left"
+                self.flip = False
+            elif (keys[pygame.K_DOWN] or keys[pygame.K_UP]) and keys[pygame.K_RIGHT]:
+                self.set_animation(1)
+                self.dir = "right"
+                self.flip = True
+            elif keys[pygame.K_UP]:
+                self.dir = "up"
+                self.set_animation(0)
+            elif keys[pygame.K_DOWN]:
+                self.dir = "down"
+                self.set_animation(2)
+            elif keys[pygame.K_LEFT]:
+                self.dir = "left"
+                self.set_animation(1)
+                self.flip = False
+            elif keys[pygame.K_RIGHT]:
+                self.dir = "right"
+                self.set_animation(1)
+                self.flip = True
+            self.vel = [(int(keys[pygame.K_RIGHT]) - int(keys[pygame.K_LEFT]))*self.speed,(int(keys[pygame.K_DOWN]) - int(keys[pygame.K_UP]))*self.speed]
+            if self.stop : self.vel = [0, 0]
+            if abs(self.vel[0]) == abs(self.vel[1]) != 0:
+                self.vel[0] *= (1/1.4)
+                self.vel[1] *= (1/1.4)
+            if (keys[pygame.K_DOWN] or keys[pygame.K_LEFT] or keys[pygame.K_RIGHT] or keys[pygame.K_UP]) and not self.stop:
+                self.animate(self.game.get_dt())
+            else:
+                self.set_animation_cursor(2)
+
+            leg = False
+            for obj in scene.get_objects_by_tag("@pokemon"):
+                if obj.id in [60, 59, 58, 57, 56, 55]:
+                    leg = True
+            
+            if not leg:
+                self.check_transitions()
+            else:
+                if self.pos[0] + 32 > 25 * 32:
+                    self.pos[0] = 25 * 32 - 32
+                if self.pos[0] + 32 > 25 * 32:
+                    self.pos[0] = 25 * 32 - 32
+                if self.pos[1] < 0:
+                    self.pos[1] = 0
+                if self.pos[0] < 0:
+                    self.pos[0] = 0
+            self.check_items(scene)
         self.render()
-        self.check_transitions()
-        self.check_items()
         self.render_label()
 
     def render_label(self):
@@ -81,13 +107,15 @@ class Player(Entity, Animated):
     
     def inventory_(self):
         for idx, slot in enumerate(self.inventory):
-            self.game.draw(self.game.assets["slot"][int(idx == self.item_chosen)], (50*idx + 200, 360-44-5))
+            self.game.draw(self.game.assets["slot"][int(idx == self.item_chosen)], (50*idx + 10, 6))
             if slot != None:
-                self.game.draw(self.game.assets["items"][slot[0]], (50*idx + 200 + 3, 360-44-5 + 3))
+                self.game.draw(self.game.assets["items"][slot[0]], (50*idx + 10 + 3, 6))
                 if slot[1] != 1:
-                    self.game.draw_text(str(slot[1]), "main15", (50*idx + 200 + 25, 360-44-5 + 25))
+                    self.game.draw_text(str(slot[1]), "main15", (50*idx + 10 + 28, 30))
+                if self.couldown[idx] > 0:
+                    self.game.draw_rect(pygame.Rect((50*idx + 10 + 4, 9), (35, 39*(self.couldown[idx]/self.game.items[self.inventory[idx][0]]["couldown"]))), (100, 100, 100))
     
-    def check_items(self):
+    def check_items(self, scene):
         self.switch = True
         self.attack = -1
         self.attack_rect = pygame.Rect(0, 0, 0, 0)
@@ -156,6 +184,14 @@ class Player(Entity, Animated):
                 self.attack_rect.w = 60
                 self.attack_rect.x -= 20
                 #self.game.render_rect(self.attack_rect, (255, 0, 0))
+        for tilemap in scene.get_objects_by_tag("@tilemap"):
+            if "#solid" in tilemap.tags:
+                for tile in tilemap.tilemap.values():
+                    try:
+                        if pygame.Rect(tile["pos"][0], tile["pos"][1], self.game.tile_size, self.game.tile_size).colliderect(self.attack_rect):
+                            self.attack_rect = pygame.Rect(0, 0, 0, 0)
+                    except:
+                        pass
 
     def check_transitions(self):
         if self.pos[1] <= -56:

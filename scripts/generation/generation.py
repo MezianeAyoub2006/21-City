@@ -7,46 +7,47 @@ GRASS_ID = 13
 ANIM_FLOWERS = [3608, 3616]
 WATER = [338, 346, 354, 362, 370, 394]
 
-def generate_biome_collection(game, scene, size, tile_size, id, config, boss):
+def generate_biome_collection(game, scene, size, tile_size, id, config, boss, spawn=True):
     collection = TilemapCollection(game, tile_size)
     biome = game.biomes_data[id]["name"]
-    if boss:
-        match id:
-            case 0:
-                poke, level = 59, 20
-            case 1:
-                poke, level = 58, 40
-            case 2:
-                poke, level = 56, 60,
-            case 6:
-                poke, level = 55, 80
-            case 5:
-                poke, level = 57, 90
-            case 4:
-                poke, level = 60, 100
-        spawn_pokemon(scene, poke, [12*32, 12*32], level, 2)
-    else:
-        match id:
-            case 0:
-                levels = [1, 20]
-            case 1:
-                levels = [25, 35]
-            case 2:
-                levels = [40, 50]
-            case 6:
-                levels = [55, 65]
-            case 5:
-                levels = [70, 80]
-            case 4:
-                levels = [85, 95]
-        spawned = False
-        while not spawned:
-            for i in range(1):
-                for group in game.spawn_data["group"]:
-                    if biome in group["biome"]:
-                        if random.random() < group["biome"][biome]:
-                            spawn_group(scene, group["id"], (12*32, 12*32), 2, levels)
-                            spawned = True
+    if spawn:
+        if boss:
+            match id:
+                case 0:
+                    poke, level = 59, 20
+                case 1:
+                    poke, level = 58, 40
+                case 2:
+                    poke, level = 56, 60,
+                case 6:
+                    poke, level = 55, 80
+                case 5:
+                    poke, level = 57, 90
+                case 4:
+                    poke, level = 60, 100
+            spawn_pokemon(scene, poke, [12*32, 12*32], level, 2)
+        else:
+            match id:
+                case 0:
+                    levels = [1, 20]
+                case 1:
+                    levels = [25, 35]
+                case 2:
+                    levels = [40, 50]
+                case 6:
+                    levels = [55, 65]
+                case 5:
+                    levels = [70, 80]
+                case 4:
+                    levels = [85, 95]
+            spawned = False
+            while not spawned:
+                for i in range(1):
+                    for group in game.spawn_data["group"]:
+                        if biome in group["biome"]:
+                            if random.random() < group["biome"][biome]:
+                                spawn_group(scene, group["id"], (12*32, 12*32), 2, levels)
+                                spawned = True
 
     collection.add_tilemaps(
             Tilemap(game, tile_size, 0),    # Background Layer
@@ -847,5 +848,5 @@ def generate_room(game, biome):
         else: previous = path[index-1]
         if index == len(path)-1: next = None
         else: next = path[index + 1]
-        room[pos].link(*generate_biome_collection(game, room[pos], game.size, 32, biome, get_biome_type(previous, pos, next), next==None).tilemaps.values())
+        room[pos].link(*generate_biome_collection(game, room[pos], game.size, 32, biome, get_biome_type(previous, pos, next), next==None, pos != (0, 0)).tilemaps.values())
     return room

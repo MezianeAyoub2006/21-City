@@ -560,63 +560,6 @@
             "biome" : {
                 "cave" : 0.025     
             }
-        },
-
-        {
-            "id" : 22, 
-            "composition" : [55],
-            "number" : [[1, 1]],
-            "biome" : {
-                "water" : 0.01        
-            }
-        },
-
-        {
-            "id" : 23, 
-            "composition" : [56],
-            "number" : [[1, 1]],
-            "biome" : {
-                "forest" : 0.01
-                
-            }
-        },
-
-        {
-            "id" : 24, 
-            "composition" : [57],
-            "number" : [[1, 1]],
-            "biome" : {
-                "heat_cave" : 0.01
-                
-            }
-        },
-
-        {
-            "id" : 25, 
-            "composition" : [58],
-            "number" : [[1, 1]],
-            "biome" : {
-                "plain" : 0.01
-                
-            }
-        },
-
-        {
-            "id" : 26, 
-            "composition" : [59],
-            "number" : [[1, 1]],
-            "biome" : {
-                "dense_plain": 0.01   
-            }
-        },
-
-        {
-            "id" : 27, 
-            "composition" : [60],
-            "number" : [[1, 1]],
-            "biome" : {
-                "cave": 0.01
-            }
         }
     ]
 }

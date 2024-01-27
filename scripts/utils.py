@@ -24,17 +24,20 @@ def random_position_inside_circle(radius, center=(0, 0)):
 def direction(vector):
     angle = math.degrees(math.atan2(vector[1], vector[0]))
     angle += 360 if angle < 0 else 0
-    directions = ["right", "down", "left","up"]
-    index = round(angle / 90) % 4  
-    return directions[index]
+    directions = ["right", "down-right", "down", "down-left", "left", "up-left", "up", "up-right"]
+    index = round(angle / 45) % 8 
+    try:
+        return directions[index]
+    except:
+        return "down"
 
 def generate_room_path(line_count = 2):
     neighboors = [(1, 0), (-1, 0), (0, 1), (0, -1)]
     line_count = line_count
-    positions = [(0, 0)]
+    positions = [(0, 0), (1, 0)]
     for i in range(line_count):
         random.shuffle(neighboors)
         for offset in neighboors:
             if not (positions[-1][0] + offset[0], positions[-1][1] + offset[1]) in positions:
                 positions.append((positions[-1][0] + offset[0], positions[-1][1] + offset[1]))
-    return positions
+    return positions 
