@@ -21,7 +21,7 @@ class Menu:
             self.game.render(self.game.assets["darkrai"].subsurface(pygame.Rect(int(self.count)*250, 0, 250, 224)), (300, self.y))
         if pygame.key.get_pressed()[pygame.K_RETURN] and self.game.transition_count == 0:
             self.game.transition_count = 0.1
-            self.game.transition_data = (0, 5, 90, [[3, 1], [2, 1], [7, 2]])
+            self.game.transition_data = (0, 0, 5, [[0, 1], None, None])
         try: 
             self.game.render(self.game.assets["logo"].subsurface(pygame.Rect(int(self.other_count)*500, 0, 500, 213)), (160, 190))
         except ValueError: 

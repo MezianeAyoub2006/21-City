@@ -81,7 +81,7 @@ class Portal(GameObject):
             player = Entity(self.game, [0, 0], [0, 0], [0, 0], 0)
         if player.rect().colliderect(self.rect) and pygame.key.get_pressed()[pygame.K_e] and self.game.transition_count == 0:
             self.game.transition_count = 0.1
-            self.game.transition_data = (0, {0:1, 1:2, 2:6, 5:4, 6:5}[self.game.biome], player.level, player.inventory)
+            self.game.transition_data = (0, {0:1, 1:2, 2:6, 5:4, 6:5}[self.game.biome], player.level, player.inventory, player.collide, player.speed)
         try:
             self.game.render(self.game.assets["portal"][int(self.count)], self.pos)
         except IndexError:
@@ -135,7 +135,7 @@ class Pokemon(Entity):
             if self.game.biome == 1:
                 self.timey = 0.2
             if self.game.biome == 2:
-                self.timey = 0.18
+                self.timey = 0.1
             if self.game.biome == 6:
                 self.timey = 0.04
             if self.game.biome == 5:
@@ -145,7 +145,13 @@ class Pokemon(Entity):
             if self.game.biome == 6:
                 self.timey = 0.1 
             if self.game.biome == 0:
-                self.timey = 0.075
+                self.timey = 0.15
+        if self.game.pause:
+            self.update(self.game.scenes[self.game.index])
+            self.render()
+        if hasattr(self.game, "scenes"):
+            self.swimmer = Swim(self.game, self, 1.1, (-10, 3))
+            self.game.scenes[self.game.index].link(self.swimmer)
     
     def set_asset_to_be_shiny(self): 
         for x in range(128):
@@ -200,7 +206,7 @@ class Pokemon(Entity):
                     elif self.game.biome == 1:
                         scene.link(Attack(self, self.game, 0, (self.get_stat("Sp. Attack")*9)/(5*50), (self.get_stat("Sp. Attack")*self.level*1.5)/(5*50), 0))
                     elif self.game.biome == 2:
-                        scene.link(Attack(self, self.game, 2, (self.get_stat("Sp. Attack")*10.5*(1.5 if self.id in [60, 59, 58, 57, 56, 55] else 1))/(5*50), (self.get_stat("Sp. Attack")*self.level*1.5)/(5*50), 0))
+                        scene.link(Attack(self, self.game, 2, (self.get_stat("Sp. Attack")*10.5*(1.15 if self.id in [60, 59, 58, 57, 56, 55] else 1))/(5*50), (self.get_stat("Sp. Attack")*self.level*1.5)/(5*50), 0))
                     elif self.game.biome == 6:
                         scene.link(Attack(self, self.game, 1, (self.get_stat("Sp. Attack")*9*(0.7 if self.id in [60, 59, 58, 57, 56, 55] else 1))/(5*50), (self.get_stat("Sp. Attack")*self.level*2)/(5*50), 0, 1 if self.id in [60, 59, 58, 57, 56, 55] else 0))
                     elif self.game.biome == 5:

@@ -3,20 +3,20 @@ from scripts.generation.generation import *
 from scripts.player.shadow import *
 
 class Player(Entity, Animated):
-    def __init__(self, game, pos, dir, life=100, level=5, inventory=[(0, 1), None, None, None, None]):
+    def __init__(self, game, pos, dir, life=100, level=5, inventory=[(0, 1), None, None, None, None], speed=3, couldown=[0,0,0], collide=True):
         Entity.__init__(self, game, pos, [24, 16], [10, 24], 2)
         Animated.__init__(self, game.assets["player_walk_cycle"])
-        self.collide = True
+        self.collide = collide
         self.flip = False
         self.dir = dir
         self.level = level
         self.types = []
-        self.speed = 3
+        self.speed = speed
         self.tags.append("@player")
         self.transition_data = None
         self.inventory = inventory.copy()
         self.inventory = list(map(lambda x : None if x == "" else x, self.inventory))
-        self.couldown = [0, 0, 0, 0, 0]
+        self.couldown = couldown
         self.item_chosen = 0
         self.life = life
         self.max_life = 100
@@ -154,9 +154,9 @@ class Player(Entity, Animated):
                 range_ = self.game.items[self.inventory[self.item_chosen][0]]["range"]
                 self.attack_rect.w = range_ // 2
                 self.attack_rect.h = 60
-                self.attack_rect.y -= 20
+                self.attack_rect.y -= 30
                 self.attack_rect.x -= self.attack_rect.w
-                #self.game.render_rect(self.attack_rect, (255, 0, 0))
+                
             if self.dir in ["right", "up-right", "down-right"]:
                 self.attack_rect = self.rect()
                 w = self.attack_rect.w
@@ -164,8 +164,7 @@ class Player(Entity, Animated):
                 self.attack_rect.w = range_ // 2
                 self.attack_rect.x += w 
                 self.attack_rect.h = 60
-                self.attack_rect.y -= 20
-                #self.game.render_rect(self.attack_rect, (255, 0, 0))
+                self.attack_rect.y -= 30
             if self.dir == "up":   
                 self.attack_rect = self.rect()
                 range_ = self.game.items[self.inventory[self.item_chosen][0]]["range"]
@@ -174,7 +173,6 @@ class Player(Entity, Animated):
                 self.attack_rect.x -= 15
                 self.attack_rect.y += self.attack_rect.h
                 self.attack_rect.top = self.attack_rect.top - range_ 
-                #self.game.render_rect(self.attack_rect, (255, 0, 0))
             if self.dir == "down":
                 self.attack_rect = self.rect()
                 h = self.attack_rect.h
@@ -183,7 +181,6 @@ class Player(Entity, Animated):
                 self.attack_rect.y += h
                 self.attack_rect.w = 60
                 self.attack_rect.x -= 20
-                #self.game.render_rect(self.attack_rect, (255, 0, 0))
         for tilemap in scene.get_objects_by_tag("@tilemap"):
             if "#solid" in tilemap.tags:
                 for tile in tilemap.tilemap.values():
@@ -192,11 +189,13 @@ class Player(Entity, Animated):
                             self.attack_rect = pygame.Rect(0, 0, 0, 0)
                     except:
                         pass
+        if self.game.debug_show:
+            self.game.render_rect(self.attack_rect, (255, 0, 0))
 
     def check_transitions(self):
         if self.pos[1] <= -56:
             index = (self.game.index[0], self.game.index[1]-1)
-            player = Player(self.game, [11*32, 25*32-1], "down", self.life, self.level, self.inventory)
+            player = Player(self.game, [11*32, 25*32-1], "down", self.life, self.level, self.inventory, self.speed, self.couldown, self.collide)
             for i in range(150): self.game.scroll(player.rect().center, 15)
             if self.game.camera[0] < 0: self.game.camera[0] = 0
             if self.game.camera[1] < 0: self.game.camera[1] = 0
@@ -209,7 +208,7 @@ class Player(Entity, Animated):
             self.game.index = index
         if self.pos[1] >= 25 * 32:
             index = (self.game.index[0], self.game.index[1]+1)
-            player = Player(self.game, [11*32, -55], "down", self.life,self.level, self.inventory)
+            player = Player(self.game, [11*32, -55], "down", self.life,self.level, self.inventory, self.speed, self.couldown, self.collide)
             for i in range(150): self.game.scroll(player.rect().center, 15)
             if self.game.camera[0] < 0: self.game.camera[0] = 0
             if self.game.camera[1] < 0: self.game.camera[1] = 0
@@ -222,7 +221,7 @@ class Player(Entity, Animated):
             self.game.index = index
         if self.pos[0] <= -56:
             index = (self.game.index[0]-1, self.game.index[1])
-            player = Player(self.game, [25*32-1, 12*32], "down",self.life, self.level, self.inventory)
+            player = Player(self.game, [25*32-1, 12*32], "down",self.life, self.level, self.inventory, self.speed, self.couldown, self.collide)
             for i in range(150): self.game.scroll(player.rect().center, 15)
             if self.game.camera[0] < 0: self.game.camera[0] = 0
             if self.game.camera[1] < 0: self.game.camera[1] = 0
@@ -235,7 +234,7 @@ class Player(Entity, Animated):
             self.game.index = index
         if self.pos[0] >= 25 * 32:
             index = (self.game.index[0]+1, self.game.index[1])
-            player = Player(self.game, [-55, 12*32], "down", self.life,self.level, self.inventory)
+            player = Player(self.game, [-55, 12*32], "down", self.life,self.level, self.inventory, self.speed, self.couldown, self.collide)
             for i in range(150): self.game.scroll(player.rect().center, 15)
             if self.game.camera[0] < 0: self.game.camera[0] = 0
             if self.game.camera[1] < 0: self.game.camera[1] = 0

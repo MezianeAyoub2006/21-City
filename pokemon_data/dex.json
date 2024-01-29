@@ -3041,7 +3041,7 @@
             "HP": 80,
             "Attack": 90,
             "Defense": 100,
-            "Sp. Attack": 118,
+            "Sp. Attack": 115,
             "Sp. Defense": 90,
             "Speed": 103
         },
@@ -3129,10 +3129,10 @@
         "base": {
             "HP": 110,
             "Attack": 100,
-            "Defense": 60,
-            "Sp. Attack": 125,
+            "Defense": 80,
+            "Sp. Attack": 128,
             "Sp. Defense": 90,
-            "Speed": 100
+            "Speed": 102
         },
         "species": "Genetic Pok\u00e9mon",
         "description": "Mewtwo is a Pok\u00e9mon that was created by genetic manipulation. However, even though the scientific power of humans created this Pok\u00e9mon\u2019s body, they failed to endow Mewtwo with a compassionate heart.",
